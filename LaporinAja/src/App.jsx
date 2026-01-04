@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import Navbar from './container/navbar/main_navbar';
+import { Routes , Route } from 'react-router-dom';
+
+//import semua halaman
+import Landing_page from './pages/landing_page/landing_page';
+
 
 function App() {
-
   return (
     <>
-      <Navbar/>  
+      <Routes>
+        <Route path='/' element={<Landing_page/>}/>
+      </Routes>
     </>
   )
 }
