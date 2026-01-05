@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 //import konponen
 import { Rounded_button , Link_button } from "../../component/button/buttonUI";
 
-function f(){
-    console.log('emmm');
-}
-
 function Landing_page(){
     return(
         <>

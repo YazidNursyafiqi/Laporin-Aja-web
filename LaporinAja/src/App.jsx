@@ -4,13 +4,14 @@ import { Routes , Route } from 'react-router-dom';
 
 //import semua halaman
 import Landing_page from './pages/landing_page/landing_page';
-
+import Reports from './pages/report/reports';
 
 function App() {
   return (
     <>
       <Routes>
         <Route path='/' element={<Landing_page/>}/>
+        <Route path='/Reports' element={<Reports/>}/>
       </Routes>
     </>
   )
