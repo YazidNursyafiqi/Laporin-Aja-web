@@ -3,8 +3,12 @@ import { useState , useEffect } from "react";
 
 function Reports(){
     const [ form , setForm ] = useState({
-        name:"",
-
+        kirim_sebagai:"",
+        jenis_pengaduan:"",
+        penjelasan:"",
+        kondisi_saat_ini:"",
+        yang_terkait:[],
+        yang_terdampak:""
     })
 
     const [ preview , setPreview ] = useState(null);
@@ -14,21 +18,40 @@ function Reports(){
         setPreview(imageurl)
     }
 
+    const handleChange = (e)=>{
+        const name = e.target.name
+        const value = e.target.value
+
+        setForm({...form,[name]:value});
+        console.log('diubah')
+        console.log(form)
+        
+    }
+
     useEffect(()=>{
         return()=>{
             URL.revokeObjectURL(preview)
         }
     }, [preview])
 
-
     const opsi_pengaduan = ["Kebersihan","Tindakan Kriminal","Dugaan Korupsi","Fasilitas Umum"]
 
+    //untuk mengumpulkan data form
+    const submitData = (e)=>{
+        e.preventDefault()
+        const formData = new FormData()
+        console.log(formData)
+        for (const key in form){
+            console.log(key," ",form[key])
+        }
+    }
     
+
     return(
-        <form>
+        <form onSubmit={submitData}>
             <label>
                 Kirim sebagai:
-                <select>
+                <select value={form.kirim_sebagai} name="kirim_sebagai" onChange={handleChange}>
                     <option value="Anonim">Anonim</option>
                     <option value="User">User</option>
                 </select>
@@ -36,7 +59,7 @@ function Reports(){
             <br/>
             <label>
                 Masukkan jenis Pengaduan:
-                <select>
+                <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
                     {opsi_pengaduan.map((value)=>(
                         <option value={value} key={value}>{value}</option>
                     ))}
@@ -46,12 +69,12 @@ function Reports(){
             <label>
                 Berikan penjelasan selengkap mungkin
                 <br/>
-                <textarea type="textarea" rows="5" cols="50"/>
+                 <textarea type="textarea" rows="5" cols="50" value={form.penjelasan} name="penjelasan" onChange={handleChange}/>
             </label>
             <br/>
             <label>
                 Kondisi masalah saat ini:
-                <select>
+                <select value={form.kondisi_saat_ini} name="kondisi_saat_ini" onChange={handleChange}>
                     <option value="Belum-terselesaikan">Belum Terselesaikan</option>
                     <option value="Tidak-Diselesaikan">Tidak di selesaikan sama sekali</option>
                 </select>
@@ -71,9 +94,8 @@ function Reports(){
             <br />
             <label>
                 Siapa saja yang terdampak masalah saat ini:
-                <select>
+                <select value={form.yang_terdampak} name="yang_terdampak" onChange={handleChange}>
                     <option value="saya-sendiri">Saya sendiri</option>
-                    <option value="Beberapa-Orang">beberapa orang</option>
                     <option value="Semua-Masyarakat">Semua Masyarakat</option>
                 </select>
             </label>
