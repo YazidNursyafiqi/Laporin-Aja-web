@@ -1,7 +1,7 @@
 import { use } from "react";
 import { useState , useEffect } from "react";
 import styles from './reports.module.css'
-
+import sendReport from "../../hooks/sendReport.js";
 
 function Reports(){
     //data form yang value nya berupa string di simpan sementara di sini sebelum di submit
@@ -10,14 +10,16 @@ function Reports(){
         jenis_pengaduan:"",
         penjelasan:"",
         kondisi_saat_ini:"",
-        yang_terkait:[],
+        yang_terkait:"",
         yang_terdampak:""
     })
 
     //fungsi untuk handle preview gambar
     const [ preview , setPreview ] = useState(null);
+    const [ imagePath , setImagePath ] = useState(null);
     const handleImage = (e) => {
         const path = e.target.files[0]
+        setImagePath(path)
         const imageurl = URL.createObjectURL(path)
         setPreview(imageurl)
         //console.log(path.type,path.size)
@@ -29,12 +31,11 @@ function Reports(){
         const value = e.target.value
 
         setForm({...form,[name]:value});
-        console.log('diubah')
-        console.log(form)
+        //console.log('diubah')
+        //console.log(form)
         
     }
 
-    
     useEffect(()=>{
         return()=>{
             URL.revokeObjectURL(preview)
@@ -48,10 +49,18 @@ function Reports(){
         e.preventDefault()
         const formData = new FormData()
         console.log(formData)
+        //kumpul dari objek
         for (const key in form){
-            console.log(key," ",form[key])
+            formData.append(key,form[key])
         }
-        formData.append()
+        //kumpul gambar juga
+        formData.append("image",imagePath)
+        //debug:
+        for(const x of formData.entries()){
+            console.log(x)
+        }
+        //kirim ke server
+        sendReport(formData)
     }
     
 
