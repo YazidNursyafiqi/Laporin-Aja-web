@@ -16,12 +16,10 @@ function Navbar(){
     return(
         <div id={styles.main_navbar}>
             <nav>
-                <Navbar_option image='/icons/navbar/navbar_dashboard_icon.png' title='Dashboard' url='/Dashboard'/>
-                <Navbar_option image='/icons/navbar/navbar_courses_icon.png' title='Courses' url='/Courses'/>
-                <Navbar_option image='/icons/navbar/navbar_grades_icon.png' title='Grades' url='/Grades'/>
-                <Navbar_option image='/icons/navbar/navbar_reports_icon.png' title='Reports' url='/Reports'/>
-                <Navbar_option image='/icons/navbar/navbar_inventory_icon.png' title='Inventory' url='/Inventory'/>
-                <Navbar_option image='/icons/navbar/navbar_notification_icon.png' title='Notification' url='/Notification'/>
+                <Navbar_option image='/icons/navbar/navbar_dashboard_icon.png' title='Wilayah' url='/Wilayah'/>
+                <Navbar_option image='/icons/navbar/navbar_courses_icon.png' title='Teratas' url='/Teratas'/>
+                <Navbar_option image='/icons/navbar/navbar_grades_icon.png' title='Jenis' url='/Jenis'/>
+                <Navbar_option image='/icons/navbar/navbar_reports_icon.png' title='Terselesaikan' url='/Terselesaikan'/>
             </nav>
         </div>
     );
