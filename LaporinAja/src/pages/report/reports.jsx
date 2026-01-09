@@ -3,11 +3,16 @@ import { useState , useEffect } from "react";
 import styles from './reports.module.css'
 import sendReport from "../../hooks/sendReport.js";
 
+//import data wilayah di indonesia
+import region from './province.json'
+
 function Reports(){
     //data form yang value nya berupa string di simpan sementara di sini sebelum di submit
     const [ form , setForm ] = useState({
         kirim_sebagai:"",
         jenis_pengaduan:"",
+        provinsi:"",
+        kabupaten:"",
         penjelasan:"",
         kondisi_saat_ini:"",
         yang_terkait:"",
@@ -62,7 +67,17 @@ function Reports(){
         //kirim ke server
         sendReport(formData)
     }
-    
+
+    //update pilihan kabupaten ketika pprovinsi diubah
+    const [ regencyNow , setRegency ] = useState([])
+    useEffect(()=>{
+        const func = async ()=>{
+            console.log('provinsi diubah',form.provinsi)
+            const obj = region.find(i=>i.province === form.provinsi)
+            setRegency(obj?.regency?? [])
+        }
+        func()
+    },[form.provinsi])
 
     return(
         <form onSubmit={submitData} id={styles.container}>
@@ -84,6 +99,17 @@ function Reports(){
                             <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
                                 {opsi_pengaduan.map((value)=>(
                                     <option value={value} key={value}>{value}</option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
+
+                    <div className={styles.formInput}>
+                        <label>
+                            Masukkan Provinsi:
+                            <select value={form.provinsi} name="provinsi" onChange={handleChange}>
+                                {region.map((value)=>(
+                                    <option value={value.province} key={value.province}>{value.province}</option>
                                 ))}
                             </select>
                         </label>
@@ -119,6 +145,17 @@ function Reports(){
                         </label>
                     </div>
                     
+                    <div className={styles.formInput}>
+                        <label>
+                            Masukkan Kabupaten:
+                            <select value={form.kabupaten} name="kabupaten" onChange={handleChange}>
+                                {regencyNow.map((value)=>(
+                                    <option value={value} key={value}>{value}</option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
+
                 </div>
             </div>
             <label>
