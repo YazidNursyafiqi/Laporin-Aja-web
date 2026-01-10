@@ -5,6 +5,8 @@ import { Routes , Route } from 'react-router-dom';
 //import semua halaman
 import Landing_page from './pages/landing_page/landing_page';
 import Reports from './pages/report/reports';
+import ViewProblems_page from './pages/view-problems/view-problems';
+
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Landing_page/>}/>
         <Route path='/Reports' element={<Reports/>}/>
+        <Route path='/ViewProblems' element={<ViewProblems_page/>}/>
       </Routes>
     </>
   )
