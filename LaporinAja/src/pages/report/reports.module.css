@@ -41,10 +41,7 @@
 }
 
 #imagePreview{
-    width: 600px;
-    height: 600px;
-    overflow-y: scroll;
-    overflow-x: scroll;
+    width: 100%;
 }
 
 

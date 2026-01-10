@@ -2,6 +2,8 @@ import { use } from "react";
 import { useState , useEffect } from "react";
 import styles from './reports.module.css'
 import sendReport from "../../hooks/sendReport.js";
+import ImageCropper from "../../component/cropper/cropper.jsx";
+
 
 //import data wilayah di indonesia
 import region from './province.json'
@@ -29,6 +31,11 @@ function Reports(){
         setPreview(imageurl)
         //console.log(path.type,path.size)
     }
+
+    const onCropped = (newImage) => {
+        setPreview(newImage)
+    }
+
 
     //fungsi untuk update objek yang berisi data form secara realtime saat user mmengubah/modif isi form
     const handleChange = (e)=>{
@@ -169,10 +176,13 @@ function Reports(){
                 Masukkan bukti jika ada
                 <br />
                 <input type="file" onChange={handleImage}/>
-                <div id={styles.imagePreview}>
-                    <img src={preview}/>
-                </div>
             </label>
+            {preview == null ? (<></>) : (
+                <div id={styles.imagePreview}>
+                    <ImageCropper image={preview} onCrop={onCropped}/>
+                </div>
+            )}
+                
             <br />
             <label>
                 Siapa saja yang terkait dengan masalah ini
