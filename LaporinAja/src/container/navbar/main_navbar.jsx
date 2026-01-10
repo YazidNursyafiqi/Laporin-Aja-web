@@ -16,10 +16,10 @@ function Navbar(){
     return(
         <div id={styles.main_navbar}>
             <nav>
-                <Navbar_option image='../../icons/location-pin.png' title='Wilayah' url='/Wilayah'/>
-                <Navbar_option image='../../icons/teratas.png' title='Teratas' url='/Teratas'/>
-                <Navbar_option image='../../icons/danger.png' title='Jenis' url='/Jenis'/>
-                <Navbar_option image='../../icons/Done.svg' title='Terselesaikan' url='/Terselesaikan'/>
+                <Navbar_option image='../../icons/location-pin.png' title='Wilayah' url='/ViewProblems/Wilayah'/>
+                <Navbar_option image='../../icons/teratas.png' title='Teratas' url='/ViewProblems/Teratas'/>
+                <Navbar_option image='../../icons/danger.png' title='Jenis' url='/ViewProblems/Jenis'/>
+                <Navbar_option image='../../icons/Done.svg' title='Terselesaikan' url='/ViewProblems/Terselesaikan'/>
             </nav>
         </div>
     );
