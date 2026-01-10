@@ -82,81 +82,88 @@ function Reports(){
     return(
         <form onSubmit={submitData} id={styles.container}>
             <div id={styles.dropdownMenu}>
-                <div className={styles.dropdownSide}>
+                <div id={styles.dropdownLabelSide}>
                     <div className={styles.formInput}>
                         <label>
                             Kirim sebagai:
-                            <select value={form.kirim_sebagai} name="kirim_sebagai" onChange={handleChange}>
-                                <option value="Anonim">Anonim</option>
-                                <option value="User">User</option>
-                            </select>
                         </label>    
                     </div>
                     
                     <div className={styles.formInput}>
                         <label>
                             Masukkan jenis Pengaduan:
-                            <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
-                                {opsi_pengaduan.map((value)=>(
-                                    <option value={value} key={value}>{value}</option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
-
-                    <div className={styles.formInput}>
-                        <label>
-                            Masukkan Provinsi:
-                            <select value={form.provinsi} name="provinsi" onChange={handleChange}>
-                                {region.map((value)=>(
-                                    <option value={value.province} key={value.province}>{value.province}</option>
-                                ))}
-                            </select>
                         </label>
                     </div>
                     
-                    <div className={styles.formInput}>
-                        <label>
-                            Berikan penjelasan selengkap mungkin
-                            <br/>
-                            <textarea type="textarea" rows="5" cols="50" value={form.penjelasan} name="penjelasan" onChange={handleChange}/>
-                        </label>
-                    </div>
-                    
-                </div>
-                <div className={styles.dropdownSide}>
                     <div className={styles.formInput}>
                         <label>
                             Kondisi masalah saat ini:
-                            <select value={form.kondisi_saat_ini} name="kondisi_saat_ini" onChange={handleChange}>
-                                <option value="Belum-terselesaikan">Belum Terselesaikan</option>
-                                <option value="Tidak-Diselesaikan">Tidak di selesaikan sama sekali</option>
-                            </select>
                         </label>
                     </div>
                     
                     <div className={styles.formInput}>
                         <label>
                             Siapa saja yang terdampak masalah saat ini:
+                        </label>
+                    </div>
+
+                    <div className={styles.formInput}>
+                        <label>
+                            Masukkan Provinsi:
+                        </label>
+                    </div>
+
+                    <div className={styles.formInput}>
+                        <label>
+                            Masukkan Kabupaten:
+                        </label>
+                    </div>
+
+                    <div className={styles.formInput}>
+                        <label>
+                            Berikan penjelasan selengkap mungkin
+                            <br/>
+                        </label>
+                    </div>
+                </div>
+
+                <div id={styles.dropdownSide}>
+                            <select value={form.kirim_sebagai} name="kirim_sebagai" onChange={handleChange}>
+                                <option value="Anonim">Anonim</option>
+                                <option value="User">User</option>
+                            </select>
+
+                            <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
+                                {opsi_pengaduan.map((value)=>(
+                                    <option value={value} key={value}>{value}</option>
+                                ))}
+                            </select>
+
+                            <select value={form.kondisi_saat_ini} name="kondisi_saat_ini" onChange={handleChange}>
+                                <option value="Belum-terselesaikan">Belum Terselesaikan</option>
+                                <option value="Tidak-Diselesaikan">Tidak di selesaikan sama sekali</option>
+                            </select>
+
                             <select value={form.yang_terdampak} name="yang_terdampak" onChange={handleChange}>
                                 <option value="saya-sendiri">Saya sendiri</option>
                                 <option value="Semua-Masyarakat">Semua Masyarakat</option>
                             </select>
-                        </label>
-                    </div>
                     
-                    <div className={styles.formInput}>
-                        <label>
-                            Masukkan Kabupaten:
+                            <select value={form.provinsi} name="provinsi" onChange={handleChange}>
+                                {region.map((value)=>(
+                                    <option value={value.province} key={value.province}>{value.province}</option>
+                                ))}
+                            </select>
+
                             <select value={form.kabupaten} name="kabupaten" onChange={handleChange}>
                                 {regencyNow.map((value)=>(
                                     <option value={value} key={value}>{value}</option>
                                 ))}
                             </select>
-                        </label>
-                    </div>
 
+                            <textarea type="textarea" rows="5" cols="50" value={form.penjelasan} name="penjelasan" onChange={handleChange}/>
                 </div>
+
             </div>
             <label>
                 Masukkan bukti jika ada

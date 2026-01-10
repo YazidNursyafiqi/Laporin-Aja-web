@@ -12,18 +12,27 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     
-    background-color:rgb(184, 184, 184) ;
+    background-color:rgb(255, 255, 255) ;
     margin-left: 10px;
-    height: 30px;
+    height: 25px;
     padding-left: 10px;
     padding-right: 10px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     border-radius: 2px;
-    border:0px;
+    border-width: 0px 0px 1px 0px;
+   
+}
+
+#container textarea{
+    margin-left: 10px;
+    padding-left: 10px;
+}
+
+#container select:hover{
+    background-color: rgb(199, 199, 199);
 }
 
 #container select:focus{
-    background-color: rgb(177, 177, 177);
     outline: none;
 }
 
@@ -43,12 +52,24 @@
     border-bottom: 1px solid gray;
     display: flex;
     justify-content: space-between;
+    padding-bottom: 10px;
 }
 
 .formInput{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.dropdownSide{
+#dropdownLabelSide{
     width: 50%;
 }
+
+#dropdownSide{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#dropdownSide select{
+    margin-bottom: 13px;
+}
+

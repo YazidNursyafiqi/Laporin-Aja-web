@@ -1,7 +1,8 @@
 import express from "express"
+import viewController from "../controller/view-controller.js"
 
 const viewRoute = express.Router()
 
-view.post("/:id")
+viewRoute.get("/:type",viewController)
 
 export default viewRoute
