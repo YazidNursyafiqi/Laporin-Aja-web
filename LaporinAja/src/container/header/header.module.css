@@ -1,0 +1,49 @@
+#header_container{
+    background-color: rgb(106, 11, 0);
+    height: 55px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#header_left_side , #header_right_side{
+    height: 100%;
+}
+
+#header_left_side{
+    width: 300px;
+}
+
+#header_left_side img{
+    height: 100%;
+    margin-left: 10px;
+}
+
+#header_right_side{
+    display: flex;
+    align-items: center;
+    width: 300px;
+    justify-content: right;
+    margin-right: 10px;
+}
+
+#header_right_side a{
+    padding: 18px;
+    text-decoration: none;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s;
+}
+
+#header_right_side a:hover{
+    transition: 0.3s;
+    background-color: rgb(203, 20, 0);
+}
+
+#darkmode_button{
+    height: 50%;
+}
+
+#account_button{
+    height: 80%;
+    margin-left: 5px;
+}
