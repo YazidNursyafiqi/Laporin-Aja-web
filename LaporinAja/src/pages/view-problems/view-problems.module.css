@@ -13,3 +13,16 @@ img .content {
     height: 50px;
     width: 50px;
 }
+
+path {
+  fill: #669fd3;      
+  stroke: #ffffff;    
+  stroke-width: 0.5px; 
+  cursor: pointer;
+}
+
+path:hover {
+  fill: #04014f;       
+  z-index: 100;
+  cursor: pointer;   
+}
