@@ -1,0 +1,69 @@
+#container{
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#account{
+    height: 35px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid grey;
+    padding-bottom: 8px;
+}
+
+#account img{
+    height: 95%;
+}
+
+#account p{
+    margin-left: 10px;
+    font-size: 1.0rem;
+    color: rgb(85, 85, 85);
+}
+
+#explain{
+    padding-top: 5px;
+    font-size: 1rem;
+}
+
+#image img{
+    margin-top: 10px;
+    width: 100%;
+}
+
+#itemContainer{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+#item{
+    display: flex;
+    background-color: rgb(9, 91, 153);
+    border-radius: 30px;
+    padding-left: 10px;
+    padding-right: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    height: 35px;
+}
+
+#item p{
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+#itemName{
+    color: aliceblue;
+    border-right: 1px solid aliceblue;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-right: 5px;
+}
+
+#itemRole{
+    color: aqua;
+    margin-left: 5px;
+}
