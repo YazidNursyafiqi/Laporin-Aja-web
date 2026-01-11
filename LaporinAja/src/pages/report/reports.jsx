@@ -57,8 +57,13 @@ function Reports(){
     const opsi_pengaduan = ["Kebersihan","Tindakan Kriminal","Dugaan Korupsi","Fasilitas Umum"]
 
     //untuk mengumpulkan data form
-    const submitData = (e)=>{
+    const [ hasSubmit , setHasSubmit ] = useState(false)
+    const [ responseStatus , setResponseStatus ] = useState()
+
+    const submitData = async (e)=>{
         e.preventDefault()
+        setHasSubmit(true)
+        setResponseStatus("loading")
         const formData = new FormData()
         console.log(formData)
         //kumpul dari objek
@@ -72,7 +77,8 @@ function Reports(){
             console.log(x)
         }
         //kirim ke server
-        sendReport(formData)
+        const response = await sendReport(formData)
+        setResponseStatus(response)
     }
 
     //update pilihan kabupaten ketika pprovinsi diubah
@@ -87,6 +93,7 @@ function Reports(){
     },[form.provinsi])
 
     return(
+        <>
         <form onSubmit={submitData} id={styles.container}>
             <div id={styles.dropdownMenu}>
                 <div id={styles.dropdownLabelSide}>
@@ -191,6 +198,33 @@ function Reports(){
             <br />
             <input type="submit" value="kirim"/>
         </form>
+
+        {hasSubmit ? (
+            <div id={styles.loadingContainer}>
+                <div id={styles.loadingPopup}>
+                    <div id={styles.onLoadContainer}>
+                            {responseStatus == "loading"?(
+                                <>
+                                    <div id={styles.loadContent}>
+                                        {/* ini stage untuk loading */}
+                                        <div className={styles.loader}></div>
+                                        <p>Loading...</p>
+                                    </div>
+                                </>
+                            ):(
+                                <>
+                                    <div id={styles.responseContent}>
+                                        {responseStatus}
+                                        <br/>
+                                        <button onClick={()=>setHasSubmit(false)}>Kembali</button>
+                                    </div>
+                                </>
+                            )}
+                    </div>
+                </div>
+            </div>
+        ): (<></>)}
+        </>
     );
 }
 
