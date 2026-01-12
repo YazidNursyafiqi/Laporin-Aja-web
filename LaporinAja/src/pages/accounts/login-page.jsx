@@ -1,7 +1,11 @@
 import { useState } from "react"
 import loginAccount from "../../hooks/loginAccount"
+import { useNavigate } from "react-router-dom"
 
 function Login(){
+    const navigate = useNavigate()
+    const [ statusLogin , setStatusLogin ] = useState("-")
+
     const [ loginForm , setLoginForm ] = useState({
         username:"",
         password:""
@@ -11,10 +15,15 @@ function Login(){
         setLoginForm({...loginForm,[e.target.name]:e.target.value})
     }
 
-    const handleLogin = (e)=>{
+    const handleLogin = async(e)=>{
         e.preventDefault()
         console.log(loginForm)
-        loginAccount(loginForm)
+        const result = await loginAccount(loginForm)
+        console.log(result)
+        setStatusLogin(result.status)
+        if(result.status == "Succed"){
+            navigate('/')
+        }
     }
 
     return(
@@ -32,6 +41,7 @@ function Login(){
                 <br />
                 <button type="submit">Submit</button>
             </form>
+            <p>{statusLogin}</p>
 
         </>
     )
