@@ -36,7 +36,8 @@ function Reports(){
     }
 
     const onCropped = (newImage) => {
-        setPreview(newImage)
+        setPreview(URL.createObjectURL(newImage))
+        setImagePath(newImage)
     }
 
 
@@ -100,7 +101,7 @@ function Reports(){
             }
         }
         //kumpul gambar juga
-        formData.append("image",imagePath)
+        formData.append("image",imagePath,"IMAGE.jpg")
         //debug:
         for(const x of formData.entries()){
             console.log(x)

@@ -4,7 +4,8 @@ const uploadService = (data,image)=>{
     const imageDest = image?.filename || "no-image"
     db.collection("reports").add({
         ...data,
-        imagePath:imageDest
+        imagePath:imageDest,
+        date:Date.now()
     })
 
 }

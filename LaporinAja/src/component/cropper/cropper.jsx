@@ -8,8 +8,9 @@ function ImageCropper({ image, onCrop }) {
 
   const handleCrop = () => {
     const cropper = cropperRef.current?.cropper;
-    const croppedImage = cropper.getCroppedCanvas().toDataURL();
-    onCrop(croppedImage);
+    cropper.getCroppedCanvas().toBlob(blob=>{
+        onCrop(blob);
+    });
   };
 
   return (
