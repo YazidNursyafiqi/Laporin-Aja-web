@@ -3,12 +3,15 @@ import { useState , useEffect } from "react";
 import styles from './reports.module.css'
 import sendReport from "../../hooks/sendReport.js";
 import ImageCropper from "../../component/cropper/cropper.jsx";
-
+import checkAuth from "../../hooks/checkAuth.js";
+import { useNavigate } from "react-router-dom";
 
 //import data wilayah di indonesia
 import region from './province.json'
 
 function Reports(){
+    const navigate = useNavigate()
+
     //data form yang value nya berupa string di simpan sementara di sini sebelum di submit
     const [ form , setForm ] = useState({
         kirim_sebagai:"",
@@ -38,11 +41,27 @@ function Reports(){
 
 
     //fungsi untuk update objek yang berisi data form secara realtime saat user mmengubah/modif isi form
-    const handleChange = (e)=>{
+    const handleChange = async(e)=>{
         const name = e.target.name
         const value = e.target.value
 
+        //kondisi tambahan ketika user memilik post menggunakan akun:
+        if(name == "kirim_sebagai"){
+            if(value == "User"){
+                setChangeToUser(true)
+                const response = await checkAuth()
+                console.log(response)
+                if(response.status == "succeed"){
+                    setAccountName(response.user)
+                }else{
+                    navigate("/login")
+                }
+            }else{
+                setChangeToUser(false)
+            }
+        }
         setForm({...form,[name]:value});
+
         //console.log('diubah')
         //console.log(form)
         
@@ -56,6 +75,10 @@ function Reports(){
 
     const opsi_pengaduan = ["Kebersihan","Tindakan Kriminal","Dugaan Korupsi","Fasilitas Umum"]
 
+    //fungsi untuk mengecek apakah user ingin kirim menggunakan account
+    const [changeToUser , setChangeToUser] = useState(false)
+    const [ accountName , setAccountName] = useState("User")
+
     //untuk mengumpulkan data form
     const [ hasSubmit , setHasSubmit ] = useState(false)
     const [ responseStatus , setResponseStatus ] = useState()
@@ -68,7 +91,13 @@ function Reports(){
         console.log(formData)
         //kumpul dari objek
         for (const key in form){
-            formData.append(key,form[key])
+            if(key == "kirim_sebagai"){
+                if(form[key] != "Anonim"){
+                    formData.append(key,accountName)
+                }
+            }else{
+                formData.append(key,form[key])
+            }
         }
         //kumpul gambar juga
         formData.append("image",imagePath)
@@ -100,7 +129,7 @@ function Reports(){
                     <div className={styles.formInput}>
                         <label>
                             Kirim sebagai:
-                        </label>    
+                        </label>   
                     </div>
                     
                     <div className={styles.formInput}>
@@ -144,7 +173,7 @@ function Reports(){
                 <div id={styles.dropdownSide}>
                             <select value={form.kirim_sebagai} name="kirim_sebagai" onChange={handleChange}>
                                 <option value="Anonim">Anonim</option>
-                                <option value="User">User</option>
+                                <option value="User">{accountName}</option>
                             </select>
 
                             <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
