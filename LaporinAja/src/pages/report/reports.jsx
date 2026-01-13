@@ -20,10 +20,11 @@ function PerpetratorItem({name,role,onDelete}){
 
 function Reports(){
     const navigate = useNavigate()
-
+    
     //data form yang value nya berupa string di simpan sementara di sini sebelum di submit
+    const [ accountName , setAccountName] = useState("User")
     const [ form , setForm ] = useState({
-        kirim_sebagai:"Anonim",
+        kirim_sebagai:"",
         jenis_pengaduan:"Kebersihan",
         provinsi:"Provinsi Aceh",
         kabupaten:"",
@@ -31,7 +32,7 @@ function Reports(){
         kondisi_saat_ini:"Belum Terselesaikan",
         yang_terdampak:"Saya sendiri"
     })
-
+    
     //fungsi untuk handle preview gambar
     const [ preview , setPreview ] = useState(null);
     const [ imagePath , setImagePath ] = useState(null);
@@ -42,56 +43,38 @@ function Reports(){
         setPreview(imageurl)
         //console.log(path.type,path.size)
     }
-
+    
     const onCropped = (newImage) => {
         setPreview(URL.createObjectURL(newImage))
         setImagePath(newImage)
     }
-
-
+    
+    
     //fungsi untuk update objek yang berisi data form secara realtime saat user mmengubah/modif isi form
     const handleChange = async(e)=>{
         const name = e.target.name
         const value = e.target.value
 
-        //kondisi tambahan ketika user memilik post menggunakan akun:
-        if(name == "kirim_sebagai"){
-            if(value == "User"){
-                setChangeToUser(true)
-                const response = await checkAuth()
-                console.log(response)
-                if(response.status == "succeed"){
-                    setAccountName(response.user)
-                }else{
-                    navigate("/login")
-                }
-            }else{
-                setChangeToUser(false)
-            }
-        }
         setForm({...form,[name]:value});
-
+        
         //console.log('diubah')
         //console.log(form)
         
     }
-
+    
     useEffect(()=>{
         return()=>{
             URL.revokeObjectURL(preview)
         }
     }, [preview])
-
+    
     const opsi_pengaduan = ["Kebersihan","Tindakan Kriminal","Dugaan Korupsi","Fasilitas Umum"]
-
-    //fungsi untuk mengecek apakah user ingin kirim menggunakan account
-    const [changeToUser , setChangeToUser] = useState(false)
-    const [ accountName , setAccountName] = useState("User")
-
+    
+    
     //untuk mengumpulkan data form
     const [ hasSubmit , setHasSubmit ] = useState(false)
     const [ responseStatus , setResponseStatus ] = useState()
-
+    
     const submitData = async (e)=>{
         e.preventDefault()
         setHasSubmit(true)
@@ -100,12 +83,6 @@ function Reports(){
         console.log(formData)
         //kumpul dari objek
         for (const key in form){
-            if(key == "kirim_sebagai"){
-                if(form[key] != "Anonim"){
-                    formData.append(key,accountName)
-                    continue
-                }
-            }
             formData.append(key,form[key])
         }
         //kumpul gambar juga
@@ -124,7 +101,7 @@ function Reports(){
         const response = await sendReport(formData)
         setResponseStatus(response)
     }
-
+    
     //update pilihan kabupaten ketika pprovinsi diubah
     const [ regencyNow , setRegency ] = useState([])
     useEffect(()=>{
@@ -135,7 +112,7 @@ function Reports(){
         }
         func()
     },[form.provinsi])
-
+    
     //fungsi untuk membuat menu list terkait
     const [perpetratorList,setPerpetratorList] = useState({})
     const [perpetratorInput,setPerpetratorInput] = useState({
@@ -150,14 +127,27 @@ function Reports(){
     const addPerpetrator = ()=>{
         const newName = perpetratorInput.nama
         const newRole = perpetratorInput.sebagai
-
+        
         setPerpetratorList({...perpetratorList,[newName]:newRole})
     }
     const deletePerpetrator = (name)=>{
         const {[name]:_,...removed} = perpetratorList
         setPerpetratorList(removed)
     }
-
+    
+    //cek autentikasi user
+    useEffect(()=>{
+        async function x(){
+            const response = await checkAuth()
+            if(response.status == "succeed"){
+                setAccountName(response.user)
+                setForm({...form,"kirim_sebagai":accountName})
+            }else{
+                navigate("/login")
+            }
+        }  
+        x()
+    },[])
     return(
         <>
         <form onSubmit={submitData} id={styles.container}>
@@ -208,10 +198,7 @@ function Reports(){
                 </div>
 
                 <div id={styles.dropdownSide}>
-                            <select value={form.kirim_sebagai} name="kirim_sebagai" onChange={handleChange}>
-                                <option value="Anonim">Anonim</option>
-                                <option value="User">{accountName}</option>
-                            </select>
+                            <p>{accountName}</p>
 
                             <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
                                 {opsi_pengaduan.map((value)=>(
