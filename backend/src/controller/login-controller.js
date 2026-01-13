@@ -11,6 +11,9 @@ export const loginController = async(req,res)=>{
         res.cookie("token",result.sessionToken,{
             httpOnly:true
         })
+        res.cookie("username",input.username,{
+            httpOnly:true
+        })
     }
 
     res.json(result)

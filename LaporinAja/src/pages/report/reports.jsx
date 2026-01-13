@@ -140,8 +140,8 @@ function Reports(){
         async function x(){
             const response = await checkAuth()
             if(response.status == "succeed"){
-                setAccountName(response.user)
-                setForm({...form,"kirim_sebagai":accountName})
+            setAccountName(response.user)
+                setForm({...form,"kirim_sebagai":response.user})
             }else{
                 navigate("/login")
             }

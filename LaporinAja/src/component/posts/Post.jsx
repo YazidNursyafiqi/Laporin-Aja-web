@@ -9,29 +9,14 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
     const navigate = useNavigate()
     
     const [likeState,setLikes] = useState(likes)
-    const [commentInput,setCommentInput] = useState({
-        from:"Anonim",
-        comment:""
-    })
+    const [commentInput,setCommentInput] = useState("")
 
     //fungsi untuk mengecek apakah user ingin kirim menggunakan account
     const [changeToUser , setChangeToUser] = useState(false)
     const [ accountName , setAccountName] = useState("User")
 
     const handleChange = async(e)=>{
-        const name = e.target.name
-        const value = e.target.value
-        //cek login/tidaknya client ketika memilih ke user
-        if(name == "from" && value == "User"){
-            const response = await checkAuth()
-            if(response.status == "succeed"){
-                setAccountName(response.user)
-            }else{
-                navigate('/login')
-            }
-        }
-
-        setCommentInput({...commentInput,[name]:value})
+        setCommentInput(e.target.value)
     }
 
     const handleSubmit = (e)=>{
@@ -93,10 +78,6 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
                 </div>
                 <form onSubmit={handleSubmit}>
                     <input type="text" value={commentInput.comment} name="comment" id={styles.inputComment} onChange={handleChange}></input>
-                    <select value={commentInput.from} name="from" onChange={handleChange}>
-                        <option value="Anonim">Anonim</option>
-                        <option value="User">{accountName}</option>
-                    </select>
                     <button type="submit" id={styles.sendComment}>Send</button>
                 </form>
             </div> 
