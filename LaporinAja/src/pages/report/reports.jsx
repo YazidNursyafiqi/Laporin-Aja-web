@@ -9,6 +9,15 @@ import { useNavigate } from "react-router-dom";
 //import data wilayah di indonesia
 import region from './province.json'
 
+function PerpetratorItem({name,role,onDelete}){
+    return(
+        <div>
+            {name} = {role} 
+            <button type="button" onClick={()=>onDelete(name)}>del</button>
+        </div>
+    )
+}
+
 function Reports(){
     const navigate = useNavigate()
 
@@ -20,7 +29,6 @@ function Reports(){
         kabupaten:"",
         penjelasan:"",
         kondisi_saat_ini:"Belum Terselesaikan",
-        yang_terkait:"",
         yang_terdampak:"Saya sendiri"
     })
 
@@ -106,6 +114,8 @@ function Reports(){
         }else{
             formData.append("image","no-image")
         }
+        //kumpul daftar pelaku
+        formData.append("yang_terkait",JSON.stringify(perpetratorList))
         //debug:
         for(const x of formData.entries()){
             console.log(x)
@@ -125,6 +135,28 @@ function Reports(){
         }
         func()
     },[form.provinsi])
+
+    //fungsi untuk membuat menu list terkait
+    const [perpetratorList,setPerpetratorList] = useState({})
+    const [perpetratorInput,setPerpetratorInput] = useState({
+        nama:"",
+        sebagai:""
+    })
+    const handlePerpetratorChange = (e)=>{
+        const name = e.target.name
+        const value = e.target.value
+        setPerpetratorInput({...perpetratorInput,[name]:value})
+    }
+    const addPerpetrator = ()=>{
+        const newName = perpetratorInput.nama
+        const newRole = perpetratorInput.sebagai
+
+        setPerpetratorList({...perpetratorList,[newName]:newRole})
+    }
+    const deletePerpetrator = (name)=>{
+        const {[name]:_,...removed} = perpetratorList
+        setPerpetratorList(removed)
+    }
 
     return(
         <>
@@ -227,8 +259,17 @@ function Reports(){
             <br />
             <label>
                 Siapa saja yang terkait dengan masalah ini
-                <input type="text" />
             </label>
+            <div>
+                <input type="text" value={perpetratorInput.nama} name="nama" onChange={handlePerpetratorChange}/>
+                <input type="text" value={perpetratorInput.sebagai} name="sebagai" onChange={handlePerpetratorChange}/>
+                <button type="button" onClick={addPerpetrator}>tambah</button>
+                <div>
+                    {Object.keys(perpetratorList).map(key=>(
+                        <PerpetratorItem name={key} role={perpetratorList[key]} onDelete={deletePerpetrator}/>
+                    ))}
+                </div>
+            </div>
             <br />
             <input type="submit" value="kirim"/>
         </form>

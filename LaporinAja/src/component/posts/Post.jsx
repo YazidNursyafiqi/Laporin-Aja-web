@@ -1,6 +1,8 @@
 import { useState } from "react"
 import styles from "./post.module.css"
 
+const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL
+
 function Post({from,likes,comments,location,type,perpetrator,victim,explain,image,postId}){
     const [likeState,setLikes] = useState(likes)
     const [commentInput,setCommentInput] = useState("")
@@ -25,7 +27,7 @@ function Post({from,likes,comments,location,type,perpetrator,victim,explain,imag
                         {explain}
                     </div>
                     <div id={styles.image}>
-                        <img src={image}></img>
+                        <img src={`${API_BASE_URL}/images/${image}`}></img>
                     </div>
                     <div id={styles.perpetrator}>
                         <p>Siapa saja yang terkait:</p>
