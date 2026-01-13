@@ -103,6 +103,19 @@
     margin-left: 5px;
 }
 
+#location , #problemType{
+    height: 25px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+#location img , #problemType img{
+    height: 95%;
+    margin-right: 10px;
+}
+
 .commentCard_user{
     color: gray;
     border-bottom: 1px solid gray;
@@ -141,3 +154,4 @@
     width: 20%;
     height: 110%;
 }
+

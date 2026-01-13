@@ -3,7 +3,7 @@ import styles from "./post.module.css"
 
 const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL
 
-function Post({from,likes,comments,location,type,perpetrator,victim,explain,image,postId}){
+function Post({from,likes,comments,province,regency,type,perpetrator,victim,explain,image,postId}){
     const [likeState,setLikes] = useState(likes)
     const [commentInput,setCommentInput] = useState("")
 
@@ -41,6 +41,14 @@ function Post({from,likes,comments,location,type,perpetrator,victim,explain,imag
                                 </>
                             ))}
                         </div>
+                    </div>
+                    <div id={styles.location}>
+                        <img src="/icons/location-pin.png"/> 
+                        <p>{province} , {regency}</p>
+                    </div>
+                    <div id={styles.problemType}>
+                        <img src="/icons/danger.png"/> 
+                        <p>{type}</p>
                     </div>
                     
                 </div>

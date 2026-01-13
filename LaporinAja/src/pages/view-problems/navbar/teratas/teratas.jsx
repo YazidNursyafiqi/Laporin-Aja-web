@@ -40,7 +40,7 @@ export default function Teratas(){
                             {content[page].map(
                                 (post)=>(
                                     <>
-                                        <Post from={post["kirim_sebagai"]} explain={post["penjelasan"]} image={post["imagePath"]} perpetrator={{}} comments={{}} likes={57}/>
+                                        <Post type={post["jenis_pengaduan"]} province={post["provinsi"]} regency={post["kabupaten"]} from={post["kirim_sebagai"]} explain={post["penjelasan"]} image={post["imagePath"]} perpetrator={post["yang_terkait"]} comments={post["comments"]} likes={post["likes"]}/>
 
                                     </>
                                 )
