@@ -1,7 +1,6 @@
 import { useState , useEffect } from "react"
 import Post from "../../../../component/posts/Post"
 import getPosts from "../../../../hooks/getPosts"
-import { use } from "react"
 
 
 export default function Teratas(){
