@@ -14,14 +14,14 @@ function Reports(){
 
     //data form yang value nya berupa string di simpan sementara di sini sebelum di submit
     const [ form , setForm ] = useState({
-        kirim_sebagai:"",
-        jenis_pengaduan:"",
-        provinsi:"",
+        kirim_sebagai:"Anonim",
+        jenis_pengaduan:"Kebersihan",
+        provinsi:"Provinsi Aceh",
         kabupaten:"",
         penjelasan:"",
-        kondisi_saat_ini:"",
+        kondisi_saat_ini:"Belum Terselesaikan",
         yang_terkait:"",
-        yang_terdampak:""
+        yang_terdampak:"Saya sendiri"
     })
 
     //fungsi untuk handle preview gambar
@@ -95,13 +95,17 @@ function Reports(){
             if(key == "kirim_sebagai"){
                 if(form[key] != "Anonim"){
                     formData.append(key,accountName)
+                    continue
                 }
-            }else{
-                formData.append(key,form[key])
             }
+            formData.append(key,form[key])
         }
         //kumpul gambar juga
-        formData.append("image",imagePath,"IMAGE.jpg")
+        if(imagePath != null){
+            formData.append("image",imagePath,"IMAGE.jpg")
+        }else{
+            formData.append("image","no-image")
+        }
         //debug:
         for(const x of formData.entries()){
             console.log(x)

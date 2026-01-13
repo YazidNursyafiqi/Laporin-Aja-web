@@ -5,7 +5,7 @@ const viewService = async (param) => {
         case "Newest":
             console.log('lurrr')
             //const snapshot = await db.collection('reports').orderBy('createdAt',"desc").limit(3).get()
-            const snapshot = await db.collection('reports').orderBy('date','asc').limit(5).get()
+            const snapshot = await db.collection('reports').orderBy('date','desc').limit(5).get()
             const result = []
             snapshot.forEach(doc => {
                 result.push(doc.data())
