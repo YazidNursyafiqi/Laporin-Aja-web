@@ -6,6 +6,7 @@ import styles from "./view-problems.module.css";
 
 //import semua content yang ada
 import Wilayah from "./navbar/wilayah/wilayah";
+import Teratas from "./navbar/teratas/teratas";
 
 function ViewProblems_page(){
     return(

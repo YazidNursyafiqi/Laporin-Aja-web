@@ -6,7 +6,8 @@ import { Routes , Route } from 'react-router-dom';
 import Landing_page from './pages/landing_page/landing_page';
 import Reports from './pages/report/reports';
 import ViewProblems_page from './pages/view-problems/view-problems';
-
+import Login from './pages/accounts/login-page';
+import Register from './pages/accounts/register-page';
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path='/' element={<Landing_page/>}/>
         <Route path='/Reports' element={<Reports/>}/>
         <Route path='/ViewProblems/*' element={<ViewProblems_page/>}/>
+        <Route path='/Login' element={<Login/>}/>
+        <Route path='/Register' element={<Register/>}/>
       </Routes>
     </>
   )

@@ -2,23 +2,37 @@ import { use } from "react";
 import { useState , useEffect } from "react";
 import styles from './reports.module.css'
 import sendReport from "../../hooks/sendReport.js";
+import ImageCropper from "../../component/cropper/cropper.jsx";
+import checkAuth from "../../hooks/checkAuth.js";
+import { useNavigate } from "react-router-dom";
 
 //import data wilayah di indonesia
 import region from './province.json'
 
+function PerpetratorItem({name,role,onDelete}){
+    return(
+        <div>
+            {name} = {role} 
+            <button type="button" onClick={()=>onDelete(name)}>del</button>
+        </div>
+    )
+}
+
 function Reports(){
+    const navigate = useNavigate()
+    
     //data form yang value nya berupa string di simpan sementara di sini sebelum di submit
+    const [ accountName , setAccountName] = useState("User")
     const [ form , setForm ] = useState({
         kirim_sebagai:"",
-        jenis_pengaduan:"",
-        provinsi:"",
+        jenis_pengaduan:"Kebersihan",
+        provinsi:"Provinsi Aceh",
         kabupaten:"",
         penjelasan:"",
-        kondisi_saat_ini:"",
-        yang_terkait:"",
-        yang_terdampak:""
+        kondisi_saat_ini:"Belum Terselesaikan",
+        yang_terdampak:"Saya sendiri"
     })
-
+    
     //fungsi untuk handle preview gambar
     const [ preview , setPreview ] = useState(null);
     const [ imagePath , setImagePath ] = useState(null);
@@ -29,29 +43,42 @@ function Reports(){
         setPreview(imageurl)
         //console.log(path.type,path.size)
     }
-
+    
+    const onCropped = (newImage) => {
+        setPreview(URL.createObjectURL(newImage))
+        setImagePath(newImage)
+    }
+    
+    
     //fungsi untuk update objek yang berisi data form secara realtime saat user mmengubah/modif isi form
-    const handleChange = (e)=>{
+    const handleChange = async(e)=>{
         const name = e.target.name
         const value = e.target.value
 
         setForm({...form,[name]:value});
+        
         //console.log('diubah')
         //console.log(form)
         
     }
-
+    
     useEffect(()=>{
         return()=>{
             URL.revokeObjectURL(preview)
         }
     }, [preview])
-
+    
     const opsi_pengaduan = ["Kebersihan","Tindakan Kriminal","Dugaan Korupsi","Fasilitas Umum"]
-
+    
+    
     //untuk mengumpulkan data form
-    const submitData = (e)=>{
+    const [ hasSubmit , setHasSubmit ] = useState(false)
+    const [ responseStatus , setResponseStatus ] = useState()
+    
+    const submitData = async (e)=>{
         e.preventDefault()
+        setHasSubmit(true)
+        setResponseStatus("loading")
         const formData = new FormData()
         console.log(formData)
         //kumpul dari objek
@@ -59,15 +86,22 @@ function Reports(){
             formData.append(key,form[key])
         }
         //kumpul gambar juga
-        formData.append("image",imagePath)
+        if(imagePath != null){
+            formData.append("image",imagePath,"IMAGE.jpg")
+        }else{
+            formData.append("image","no-image")
+        }
+        //kumpul daftar pelaku
+        formData.append("yang_terkait",JSON.stringify(perpetratorList))
         //debug:
         for(const x of formData.entries()){
             console.log(x)
         }
         //kirim ke server
-        sendReport(formData)
+        const response = await sendReport(formData)
+        setResponseStatus(response)
     }
-
+    
     //update pilihan kabupaten ketika pprovinsi diubah
     const [ regencyNow , setRegency ] = useState([])
     useEffect(()=>{
@@ -78,15 +112,51 @@ function Reports(){
         }
         func()
     },[form.provinsi])
-
+    
+    //fungsi untuk membuat menu list terkait
+    const [perpetratorList,setPerpetratorList] = useState({})
+    const [perpetratorInput,setPerpetratorInput] = useState({
+        nama:"",
+        sebagai:""
+    })
+    const handlePerpetratorChange = (e)=>{
+        const name = e.target.name
+        const value = e.target.value
+        setPerpetratorInput({...perpetratorInput,[name]:value})
+    }
+    const addPerpetrator = ()=>{
+        const newName = perpetratorInput.nama
+        const newRole = perpetratorInput.sebagai
+        
+        setPerpetratorList({...perpetratorList,[newName]:newRole})
+    }
+    const deletePerpetrator = (name)=>{
+        const {[name]:_,...removed} = perpetratorList
+        setPerpetratorList(removed)
+    }
+    
+    //cek autentikasi user
+    useEffect(()=>{
+        async function x(){
+            const response = await checkAuth()
+            if(response.status == "succeed"){
+            setAccountName(response.user)
+                setForm({...form,"kirim_sebagai":response.user})
+            }else{
+                navigate("/login")
+            }
+        }  
+        x()
+    },[])
     return(
+        <>
         <form onSubmit={submitData} id={styles.container}>
             <div id={styles.dropdownMenu}>
                 <div id={styles.dropdownLabelSide}>
                     <div className={styles.formInput}>
                         <label>
                             Kirim sebagai:
-                        </label>    
+                        </label>   
                     </div>
                     
                     <div className={styles.formInput}>
@@ -128,10 +198,7 @@ function Reports(){
                 </div>
 
                 <div id={styles.dropdownSide}>
-                            <select value={form.kirim_sebagai} name="kirim_sebagai" onChange={handleChange}>
-                                <option value="Anonim">Anonim</option>
-                                <option value="User">User</option>
-                            </select>
+                            <p>{accountName}</p>
 
                             <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
                                 {opsi_pengaduan.map((value)=>(
@@ -169,18 +236,57 @@ function Reports(){
                 Masukkan bukti jika ada
                 <br />
                 <input type="file" onChange={handleImage}/>
-                <div id={styles.imagePreview}>
-                    <img src={preview}/>
-                </div>
             </label>
+            {preview == null ? (<></>) : (
+                <div id={styles.imagePreview}>
+                    <ImageCropper image={preview} onCrop={onCropped}/>
+                </div>
+            )}
+                
             <br />
             <label>
                 Siapa saja yang terkait dengan masalah ini
-                <input type="text" />
             </label>
+            <div>
+                <input type="text" value={perpetratorInput.nama} name="nama" onChange={handlePerpetratorChange}/>
+                <input type="text" value={perpetratorInput.sebagai} name="sebagai" onChange={handlePerpetratorChange}/>
+                <button type="button" onClick={addPerpetrator}>tambah</button>
+                <div>
+                    {Object.keys(perpetratorList).map(key=>(
+                        <PerpetratorItem name={key} role={perpetratorList[key]} onDelete={deletePerpetrator}/>
+                    ))}
+                </div>
+            </div>
             <br />
             <input type="submit" value="kirim"/>
         </form>
+
+        {hasSubmit ? (
+            <div id={styles.loadingContainer}>
+                <div id={styles.loadingPopup}>
+                    <div id={styles.onLoadContainer}>
+                            {responseStatus == "loading"?(
+                                <>
+                                    <div id={styles.loadContent}>
+                                        {/* ini stage untuk loading */}
+                                        <div className={styles.loader}></div>
+                                        <p>Loading...</p>
+                                    </div>
+                                </>
+                            ):(
+                                <>
+                                    <div id={styles.responseContent}>
+                                        {responseStatus}
+                                        <br/>
+                                        <button onClick={()=>setHasSubmit(false)}>Kembali</button>
+                                    </div>
+                                </>
+                            )}
+                    </div>
+                </div>
+            </div>
+        ): (<></>)}
+        </>
     );
 }
 

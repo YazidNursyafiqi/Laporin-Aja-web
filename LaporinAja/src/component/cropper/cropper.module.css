@@ -1,0 +1,28 @@
+#container{
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+}
+
+#cropperContainer{
+    width: 80% ;
+}
+
+#buttonContainer{
+    width: 20%;
+    padding-left: 10px;
+}
+
+#buttonContainer button{
+    background-color: rgb(83, 83, 83);
+    border-radius: 3px;
+    outline: none;
+    border: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    height: 30px;
+    color: aliceblue;
+}
