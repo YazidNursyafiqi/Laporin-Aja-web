@@ -4,10 +4,9 @@ function Maps(){
     return(
         <>
             <div className={styles.content}>
-                <h1>Lihat kumpulan pengajuan</h1>
                 <svg
                 className={styles.petaIndonesia} 
-                width="800"                   
+                width="1100"                   
                 viewBox="0 0 182.60319 67.096506"
                 version="1.1"
                 id="svg1"

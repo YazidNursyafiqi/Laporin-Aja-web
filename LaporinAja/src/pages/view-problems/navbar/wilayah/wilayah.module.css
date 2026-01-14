@@ -1,0 +1,68 @@
+.container {
+  padding: 20px 40px; 
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  font-family: serif; 
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.mapWrapper {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.topRegionSection {
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+}
+
+.listItem {
+  background-color: #E5E7EB;
+  padding: 15px 20px;
+  border-radius: 8px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  color: #333;
+  transition: 0.2s;
+}
+
+.listItem:hover {
+  background-color: #d1d5db;
+}
+
+.count {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.seeMore {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.seeMore a {
+  color: #555;
+  text-decoration: none;
+  font-size: 0.9rem;
+}

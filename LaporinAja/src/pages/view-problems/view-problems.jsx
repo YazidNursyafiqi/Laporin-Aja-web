@@ -1,5 +1,6 @@
 import { Link, Route , Routes } from "react-router-dom";
-//import navbar
+//import navbar dan header
+import Header from "../../container/header/header";
 import Navbar from "../../container/navbar/main_navbar";
 import styles from "./view-problems.module.css";
 
@@ -10,15 +11,16 @@ import Teratas from "./navbar/teratas/teratas";
 function ViewProblems_page(){
     return(
         <>
-         <div className={styles.layout}>
-            <Navbar/>
-            <div className={styles.content}>
-                <Routes>
-                    <Route path="/Wilayah" element={<Wilayah/>}/>
-                    <Route path="/Teratas" element={<Teratas/>}/>
-                </Routes>
+         <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+            <Header/>
+            <div className={styles.layout}>
+                <Navbar/>
+                <div id="Content">
+                    <Routes>
+                        <Route path="/Wilayah" element={<Wilayah/>}/>
+                    </Routes>
+                </div>
             </div>
-              
          </div>
         </>
     )
