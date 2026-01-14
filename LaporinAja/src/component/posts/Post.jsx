@@ -1,7 +1,7 @@
 import { useState } from "react"
 import styles from "./post.module.css"
 import { useNavigate } from "react-router-dom"; 
-import checkAuth from "../../hooks/checkAuth";
+import sendComment from "../../hooks/sendComment";
 
 const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL
 
@@ -19,9 +19,10 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
         setCommentInput(e.target.value)
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async(e)=>{
         e.preventDefault()
-        console.log(commentInput)
+        const response = await sendComment(commentInput,postId)
+        console.log(response)
     }
 
     return(
@@ -69,10 +70,10 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
             <div id={styles.commentContainer}>
                 <p>Comments:</p>
                 <div id={styles.commentList}>
-                    {Object.keys(comments).map((key)=>(
+                    {comments.map((value)=>(
                         <div className={styles.commentCard}>
-                            <p className={styles.commentCard_user}>{key}</p>
-                            <p className={styles.commentCard_content}>{comments[key]}</p>
+                            <p className={styles.commentCard_user}>{value["username"]}</p>
+                            <p className={styles.commentCard_content}>{value["comment"]}</p>
                         </div>
                     ))}
                 </div>

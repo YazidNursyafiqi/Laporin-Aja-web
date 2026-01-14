@@ -9,7 +9,7 @@ const uploadService = (data,image)=>{
         ["yang_terkait"]: JSON.parse(data.yang_terkait),
         imagePath:imageDest, //path gambar
         date:date, //waktu server saat di post
-        comments:{}, //objek kosong tempat simpan comment
+        comments:[], //objek kosong tempat simpan comment
         likes:0, //jumlah like
         id: `${date}${Math.round(Math.random()*100000)}`
     })

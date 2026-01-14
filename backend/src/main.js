@@ -9,6 +9,7 @@ import registerRoute from "./routes/register-routes.js"
 import loginRoute from "./routes/login-routes.js"
 import checkAuthRoutes from "./routes/checkAuth-routes.js"
 import getImageRoute from "./routes/getImage-routes.js"
+import interractRoutes from "./routes/interract-routes.js"
 
 const app = express()
 app.use(cors({origin:"http://localhost:5173",credentials:true}))
@@ -21,6 +22,7 @@ app.use("/register",registerRoute)
 app.use("/login",loginRoute)
 app.use("/checkAuth",checkAuthRoutes)
 app.use("/images",getImageRoute)
+app.use("/interract",interractRoutes)
 
 app.listen(3000,()=>{
     console.log("server berhasil di jalankan")
