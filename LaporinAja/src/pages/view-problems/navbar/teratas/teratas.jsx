@@ -5,38 +5,51 @@ import getPosts from "../../../../hooks/getPosts"
 
 export default function Teratas(){
     const [loaded,setLoaded] = useState(false)
-    const [content , setContent] = useState([])
-    const [page,setPage] = useState(0) //page mulai dari nol 
+    const [content , setContent] = useState(null)
+    const [page,setPage] = useState(1)
+    const [maxPage,setMaxPage] = useState(1)
     
-    const loadPost = async()=>{
+
+    //load pertama kali
+    const loadPost = async(start_end_at,forward)=>{
         console.log("start")
-        const response = await getPosts("Newest")
+        const response = await getPosts("Newest",start_end_at,forward)
         if(response.status != "not-connect"){
-            const temp = content
-            temp.push(response.content)
-            setContent(temp)
-            console.log('x')
+            //terhubung ke server
+            // const temp = content
+            // temp.push(response.content)
+            setContent(response.content)
+            setMaxPage(Math.ceil(response.totalPost/5))
         }else{
+            //tidak terhubung ke 
             console.log("diskonek")
         }
-        console.log(content)
         setLoaded(true)
     }
 
+    //page selanjutnya
+    const forward = async()=>{
+        setLoaded(false)
+        await loadPost(content[content.length-1].date,true)
+        setPage(page+1)
+    }
+    const backwward = async()=>{
+        setLoaded(false)
+        await loadPost(content[0].date,false)
+        setPage(page-1)
+    }
+
     useEffect(()=>{
-        console.log(loaded)
-        if(loaded == false){
-            loadPost()
-        }
-    },[loaded])
+        loadPost()
+    },[])
 
     return(
         <>  
             {loaded?(
                 <>
-                    {content[page] ? (
+                    {content? (
                         <>
-                            {content[page].map(
+                            {content.map(
                                 (post)=>(
                                     <>
                                         <Post postId={post["id"]} type={post["jenis_pengaduan"]} province={post["provinsi"]} regency={post["kabupaten"]} from={post["kirim_sebagai"]} explain={post["penjelasan"]} image={post["imagePath"]} perpetrator={post["yang_terkait"]} comments={post["comments"]} likes={post["likes"]}/>
@@ -44,6 +57,11 @@ export default function Teratas(){
                                     </>
                                 )
                             )}
+                            {/* navigasi halaman */}
+                            <div>
+                                <button onClick={backwward} disabled={page == 1}>Prev</button>
+                                <button onClick={forward} disabled={page == maxPage}>Next</button>
+                            </div>
                         </>
                     ) : (
                         <>Tidak ada konten</>
