@@ -1,7 +1,8 @@
 import { useState } from "react"
 import styles from "./post.module.css"
 import { useNavigate } from "react-router-dom"; 
-import sendComment from "../../hooks/sendComment";
+import {sendComment , sendLike} from "../../hooks/interract";
+import { useEffect } from "react";
 
 const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL
 
@@ -11,10 +12,6 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
     const [likeState,setLikes] = useState(likes)
     const [commentInput,setCommentInput] = useState("")
 
-    //fungsi untuk mengecek apakah user ingin kirim menggunakan account
-    const [changeToUser , setChangeToUser] = useState(false)
-    const [ accountName , setAccountName] = useState("User")
-
     const handleChange = async(e)=>{
         setCommentInput(e.target.value)
     }
@@ -22,8 +19,26 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
     const handleSubmit = async(e)=>{
         e.preventDefault()
         const response = await sendComment(commentInput,postId)
+        setCommentInput("")
+        if(response.status == "succeed"){
+            setCommentSend([...commentSend,{username:response.name,comment:commentInput}])
+            console.log(commentSend)
+        }
         console.log(response)
     }
+
+    //fungsi untuk mengirimkan like
+    const handleLike = async()=>{
+        const response = await sendLike(postId)
+        if(response.status == 'succeed'){
+            setLikeSend(likeSend+1)
+        }
+    }
+
+    //update tampilan saat user telah mengirimkan komen
+    const [commentSend , setCommentSend] = useState([])
+    //update tampilan saat user telah mengirimkan like
+    const [likeSend , setLikeSend] = useState(likes)
 
     return(
         <div id={styles.container}>
@@ -62,9 +77,9 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
                     </div>
                     
                 </div>
-                <button id={styles.likeButton}>
+                <button id={styles.likeButton} onClick={handleLike}>
                     <img src="/icons/like.png"></img>
-                    {likes}
+                    {likeSend}
                 </button>
             </div>
             <div id={styles.commentContainer}>
@@ -76,9 +91,15 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
                             <p className={styles.commentCard_content}>{value["comment"]}</p>
                         </div>
                     ))}
+                    {commentSend.map((value)=>(
+                        <div className={styles.commentCard}>
+                            <p className={styles.commentCard_user}>{value["username"]}</p>
+                            <p className={styles.commentCard_content}>{value["comment"]}</p>
+                        </div>
+                    ))}
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" value={commentInput.comment} name="comment" id={styles.inputComment} onChange={handleChange}></input>
+                    <input type="text" value={commentInput} name="comment" id={styles.inputComment} onChange={handleChange}></input>
                     <button type="submit" id={styles.sendComment}>Send</button>
                 </form>
             </div> 

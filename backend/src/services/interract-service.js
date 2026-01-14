@@ -12,3 +12,11 @@ export const commentService = async(comment,username,postID)=>{
         })
     })
 }
+
+export const likeService = async(postID)=>{
+    const snapshot = await db.collection('reports').where('id','==',postID).limit(1).get()
+    const docRef = snapshot.docs[0].ref
+    docRef.update({
+        likes: admin.firestore.FieldValue.increment(1)
+    })
+}

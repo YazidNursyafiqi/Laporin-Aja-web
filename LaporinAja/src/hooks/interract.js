@@ -1,7 +1,7 @@
 import axios from "axios";
 const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL
 
-async function sendComment(comment,postID){
+export async function sendComment(comment,postID){
     try{
         const data = {
             comment:comment,
@@ -14,4 +14,14 @@ async function sendComment(comment,postID){
     }
 }
 
-export default sendComment
+export async function sendLike(postID){
+    try{
+        const data = {
+            postID:postID
+        }
+        const result = await axios.post(`${API_BASE_URL}/interract/like`,data,{withCredentials:true})
+        return result.data
+    }catch{
+        return {status:"not-connect"}
+    }
+}
