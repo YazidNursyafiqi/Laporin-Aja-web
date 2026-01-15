@@ -1,6 +1,6 @@
 import db from "../application/firestore.js";
 
-const viewService = async (param,date,forward) => {
+export const viewService = async (param,date,forward) => {
     switch(param){
         case "Newest":
             let snapshot = null
@@ -38,4 +38,7 @@ const viewService = async (param,date,forward) => {
     return []
 }
 
-export default viewService
+export const getProvinceStatusService = async()=>{
+    const result = await db.collection('regions').doc('general').get()
+    return result.data()
+}

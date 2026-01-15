@@ -1,6 +1,6 @@
-import viewService from "../services/view-service.js"
+import {viewService , getProvinceStatusService} from "../services/view-service.js"
 
-const viewController = async (req,res)=>{
+export const viewController = async (req,res)=>{
     const param = req.params.type
     const date = Number.parseInt(req.query.start_end_at)
     console.log(date)
@@ -9,4 +9,11 @@ const viewController = async (req,res)=>{
     res.json(result)
 }
 
-export default viewController
+export const getProvinceStatusController = async(req,res)=>{
+    try{
+        const result = await getProvinceStatusService()
+        res.json({status:"succeed",content:result})
+    }catch{
+        res.json({status:"server-error"})
+    }
+}

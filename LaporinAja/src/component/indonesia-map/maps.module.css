@@ -7,14 +7,15 @@ svg{
 }
 
 path {
-  fill: #669fd3;      
-  stroke: #ffffff;    
+  fill: #02203c;      
+  stroke: #ffffff;
+  opacity: 1;    
   stroke-width: 0.5px; 
   cursor: pointer;
 }
 
-path:hover {
-  fill: #04014f;       
+path:hover {    
+  opacity: 0.9 !important;   
   z-index: 100;
   cursor: pointer;   
 }
