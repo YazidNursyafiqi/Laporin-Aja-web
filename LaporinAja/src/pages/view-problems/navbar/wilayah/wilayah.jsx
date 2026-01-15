@@ -13,7 +13,7 @@ function Wilayah(){
     return(
         <>  
             <div className={style.container}>
-                <h1 className={style.title}>Lihat kumpulan pengajuan</h1>
+                <h1 className={style.title}>Lihat kumpulan pengajuan dari berbagai wilayah</h1>
 
                 <div className={style.mapWrapper}>
                     <Maps />
