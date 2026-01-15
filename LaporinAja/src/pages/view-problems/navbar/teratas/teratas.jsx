@@ -19,7 +19,7 @@ export default function Teratas(){
             // const temp = content
             // temp.push(response.content)
             setContent(response.content)
-            setMaxPage(Math.ceil(response.totalPost/5))
+            setMaxPage(response.totalPost == 0? 1 : Math.ceil(response.totalPost/5))
         }else{
             //tidak terhubung ke 
             console.log("diskonek")

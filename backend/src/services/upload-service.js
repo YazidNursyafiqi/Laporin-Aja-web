@@ -1,5 +1,6 @@
 import { json } from "stream/consumers"
 import db from "../application/firestore.js"
+import admin from "../config/firebase.js"
 
 const uploadService = (data,image)=>{
     const imageDest = image?.filename || "no-image"
@@ -13,6 +14,10 @@ const uploadService = (data,image)=>{
         likes:0, //jumlah like
         id: `${date}${Math.round(Math.random()*100000)}`
     })
+    //update status jumlah postingan di wilayah tertentu
+    db.collection('regions').doc('general').update(
+        {[data.provinsi]: admin.firestore.FieldValue.increment(1)}
+    )
 
 }
 

@@ -15,9 +15,10 @@ function ViewProblems_page(){
             <Header/>
             <div className={styles.layout}>
                 <Navbar/>
-                <div id="Content">
+                <div className={styles.content}>
                     <Routes>
                         <Route path="/Wilayah" element={<Wilayah/>}/>
+                        <Route path="/Teratas" element={<Teratas/>}/>
                     </Routes>
                 </div>
             </div>

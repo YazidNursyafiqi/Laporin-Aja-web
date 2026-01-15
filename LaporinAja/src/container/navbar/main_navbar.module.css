@@ -1,7 +1,9 @@
 #main_navbar{
-    width: 250px;
+    width: 200px;
     /* background-color: rgb(152, 152, 152); */
     border-right: 2px solid gray;
+    position: fixed;
+    height: 100vh;
 }
 
 .navbar_option{
