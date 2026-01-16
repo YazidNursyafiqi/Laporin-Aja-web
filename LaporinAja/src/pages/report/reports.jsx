@@ -68,7 +68,7 @@ function Reports(){
         }
     }, [preview])
     
-    const opsi_pengaduan = ["Kebersihan","Tindakan Kriminal","Dugaan Korupsi","Fasilitas Umum"]
+    const opsi_pengaduan = ["Kebersihan dan Lingkungan","Tindakan Korupsi","Dugaan Korupsi","Infrastruktur dan Fasilitas", "Keamanan dan Ketertiban", "Pelayanan publik dan aparatur", "Sosial dan Kemasyarakatan", "Kesehatan", "Lalu Lintas dan Transportasi", "Perizinan dan Usaha", "Lainnya"]
     
     
     //untuk mengumpulkan data form

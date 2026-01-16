@@ -1,3 +1,7 @@
+html {
+  background-color: rgb(224, 231, 241);
+}
+
 .container {
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
