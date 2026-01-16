@@ -1,4 +1,11 @@
+/* html{
+    background-color: rgb(224, 231, 241);
+    color: white;
+} */
+
 #container{    
+    /* background-color: rgb(96, 96, 96); */
+    background-color: rgb(224, 231, 241);
     margin: 20px;
     border: 1px solid grey;
     border-radius: 10px;
@@ -46,14 +53,14 @@
 
 
 #dropdownMenu{
-    border-bottom: 1px solid gray;
+    /* border-bottom: 1px solid gray; */
     display: flex;
     justify-content: space-between;
     padding-bottom: 10px;
 }
 
 .formInput{
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 #dropdownLabelSide{
@@ -64,6 +71,10 @@
     width: 50%;
     display: flex;
     flex-direction: column;
+}
+
+#dropdownSide p{
+    margin: 20px;
 }
 
 #dropdownSide select{
@@ -148,4 +159,43 @@
     color: rgb(0, 7, 103);
     font-weight: bold;
     margin-top: 10px;
+}
+
+#button {
+    height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: large;
+    background-color: rgb(55, 149, 200);
+    border: none;
+    border-radius: 40px;
+    color: aliceblue;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* margin: 0px 10px 0px 10px; */
+}
+
+#buttonDel {
+    height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: large;
+    background-color: rgb(55, 149, 200);
+    border: none;
+    border-radius: 40px;
+    color: aliceblue;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 10px 0px 0px 10px;
+}
+
+#placeholder{
+    margin-right: 10px;
+    height: 20px;
+    border: 0;
+    border-radius: 2px;
+}
+
+#textArea {
+    border: 0;
 }

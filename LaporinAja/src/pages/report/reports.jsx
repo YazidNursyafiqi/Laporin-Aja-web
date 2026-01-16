@@ -5,6 +5,7 @@ import sendReport from "../../hooks/sendReport.js";
 import ImageCropper from "../../component/cropper/cropper.jsx";
 import checkAuth from "../../hooks/checkAuth.js";
 import { useNavigate } from "react-router-dom";
+import { Rounded_button , Link_button } from "../../component/button/buttonUI";
 
 //import data wilayah di indonesia
 import region from './province.json'
@@ -13,7 +14,7 @@ function PerpetratorItem({name,role,onDelete}){
     return(
         <div>
             {name} = {role} 
-            <button type="button" onClick={()=>onDelete(name)}>del</button>
+            <button id={styles.buttonDel} type="button" onClick={()=>onDelete(name)}>Remove</button>
         </div>
     )
 }
@@ -200,35 +201,35 @@ function Reports(){
                 <div id={styles.dropdownSide}>
                             <p>{accountName}</p>
 
-                            <select value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
+                            <select id={styles.placeholder} value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
                                 {opsi_pengaduan.map((value)=>(
                                     <option value={value} key={value}>{value}</option>
                                 ))}
                             </select>
 
-                            <select value={form.kondisi_saat_ini} name="kondisi_saat_ini" onChange={handleChange}>
+                            <select id={styles.placeholder} value={form.kondisi_saat_ini} name="kondisi_saat_ini" onChange={handleChange}>
                                 <option value="Belum-terselesaikan">Belum Terselesaikan</option>
                                 <option value="Tidak-Diselesaikan">Tidak di selesaikan sama sekali</option>
                             </select>
 
-                            <select value={form.yang_terdampak} name="yang_terdampak" onChange={handleChange}>
+                            <select id={styles.placeholder} value={form.yang_terdampak} name="yang_terdampak" onChange={handleChange}>
                                 <option value="saya-sendiri">Saya sendiri</option>
                                 <option value="Semua-Masyarakat">Semua Masyarakat</option>
                             </select>
                     
-                            <select value={form.provinsi} name="provinsi" onChange={handleChange}>
+                            <select id={styles.placeholder} value={form.provinsi} name="provinsi" onChange={handleChange}>
                                 {region.map((value)=>(
                                     <option value={value.province} key={value.province}>{value.province}</option>
                                 ))}
                             </select>
 
-                            <select value={form.kabupaten} name="kabupaten" onChange={handleChange}>
+                            <select id={styles.placeholder} value={form.kabupaten} name="kabupaten" onChange={handleChange}>
                                 {regencyNow.map((value)=>(
                                     <option value={value} key={value}>{value}</option>
                                 ))}
                             </select>
 
-                            <textarea type="textarea" rows="5" cols="50" value={form.penjelasan} name="penjelasan" onChange={handleChange}/>
+                            <textarea id={styles.textArea} type="textarea" rows="5" cols="50" value={form.penjelasan} name="penjelasan" onChange={handleChange}/>
                 </div>
 
             </div>
@@ -248,9 +249,12 @@ function Reports(){
                 Siapa saja yang terkait dengan masalah ini
             </label>
             <div>
-                <input type="text" value={perpetratorInput.nama} name="nama" onChange={handlePerpetratorChange}/>
-                <input type="text" value={perpetratorInput.sebagai} name="sebagai" onChange={handlePerpetratorChange}/>
-                <button type="button" onClick={addPerpetrator}>tambah</button>
+                <label>Identitas : </label>
+                <input type="text" id={styles.placeholder} value={perpetratorInput.nama} name="nama" onChange={handlePerpetratorChange}/>
+                <label>Peran : </label>
+                <input type="text" id={styles.placeholder} value={perpetratorInput.sebagai} name="sebagai" onChange={handlePerpetratorChange}/>
+                {/* <Rounded_button text="Tambah" onClick={addPerpetrator}></Rounded_button> */}
+                <button type="button" id={styles.button} onClick={addPerpetrator}>Tambah</button>
                 <div>
                     {Object.keys(perpetratorList).map(key=>(
                         <PerpetratorItem name={key} role={perpetratorList[key]} onDelete={deletePerpetrator}/>
@@ -258,7 +262,7 @@ function Reports(){
                 </div>
             </div>
             <br />
-            <input type="submit" value="kirim"/>
+            <input type="submit" value="Kirim" id={styles.button}/>
         </form>
 
         {hasSubmit ? (
