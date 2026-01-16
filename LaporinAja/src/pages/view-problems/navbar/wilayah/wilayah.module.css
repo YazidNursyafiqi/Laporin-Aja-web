@@ -4,14 +4,6 @@
   box-sizing: border-box;
 }
 
-.title {
-  font-family: serif; 
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #000;
-}
-
 .mapWrapper {
   width: 100%;
   margin-bottom: 30px;
@@ -39,9 +31,16 @@
   background-color: #E5E7EB;
   padding: 15px 20px;
   border-radius: 8px; 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: block; 
+  font-weight: 500;
+  color: #333;
+  transition: 0.2s;
+}
+
+.listItemExpand {
+  background-color: #9ed8ff;
+  padding: 15px 20px;
+  border-radius: 8px; 
   font-weight: 500;
   color: #333;
   transition: 0.2s;
@@ -49,6 +48,11 @@
 
 .listItem:hover {
   background-color: #d1d5db;
+}
+
+.listHeader{
+  display: flex;
+  justify-content: space-between;
 }
 
 .count {
@@ -65,4 +69,22 @@
   color: #555;
   text-decoration: none;
   font-size: 0.9rem;
+}
+
+.listDetails{
+  background-color: #c1e5ff;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.type{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px 5px 0;
+  border-bottom: 1px solid grey;
+}
+
+.type:hover{
+  background-color: #8eaabe;
 }

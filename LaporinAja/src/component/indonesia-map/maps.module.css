@@ -12,10 +12,12 @@ path {
   opacity: 1;    
   stroke-width: 0.5px; 
   cursor: pointer;
+  transition: 200ms;
 }
 
 path:hover {    
   opacity: 0.9 !important;   
   z-index: 100;
   cursor: pointer;   
+  transition: 200ms;
 }

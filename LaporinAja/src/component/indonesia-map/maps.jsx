@@ -1,24 +1,24 @@
 import styles from './maps.module.css'
 import { useState , useRef , useEffect} from 'react'
-import getProvinceStatus from '../../hooks/getProvinceStatus'
 
 //fungsi untuk ubah spasi pada key jadi underscore
 const dataParse = (input)=>{
     let maxValue = 0
     const result = {}
     Object.keys(input).forEach(key=>{
+        const value = input[key].total
         const newkey = key.replaceAll(' ','_')
-        result[newkey] = input[key]
+        result[newkey] = value
 
-        if(input[key]>maxValue){
-            maxValue = input[key]
+        if(value>maxValue){
+            maxValue = value
         }
     })
     return {result:result,maxValue:maxValue}
 }
 
 
-function Maps(){
+function Maps({mapData}){
     const [ hover , setHover ] = useState(false)
     const ref = useRef()
     const vectorRef = useRef()
@@ -53,9 +53,8 @@ function Maps(){
             if(!vectorRef.current){
                 return
             }
-    
-            const x = await getProvinceStatus()
-            setupProvinceOpacity(dataParse(x.content))
+
+            setupProvinceOpacity(dataParse(mapData))
     
             return ()=> window.removeEventListener("mousemove",move)
         }
@@ -364,7 +363,6 @@ function Maps(){
                     
                     transform="matrix(1.3333333,0,0,-1.3333333,167.03627,290.24467)" /></g></svg>
             </div> 
-            <p>{hover.toString()}</p>
 
             {hover?(
                 <div ref={ref} style={{position:"fixed",top:"-20px",left:"10px"}}>ini popup</div>

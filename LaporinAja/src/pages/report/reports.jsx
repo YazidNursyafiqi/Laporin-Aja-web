@@ -25,12 +25,13 @@ function Reports(){
     const [ accountName , setAccountName] = useState("User")
     const [ form , setForm ] = useState({
         kirim_sebagai:"",
-        jenis_pengaduan:"Kebersihan",
+        jenis_pengaduan:"Infrastruktur dan Fasilitas",
         provinsi:"Provinsi Aceh",
         kabupaten:"",
         penjelasan:"",
         kondisi_saat_ini:"Belum Terselesaikan",
         yang_terdampak:"Saya sendiri"
+        //default value
     })
     
     //fungsi untuk handle preview gambar
@@ -68,7 +69,7 @@ function Reports(){
         }
     }, [preview])
     
-    const opsi_pengaduan = ["Kebersihan","Tindakan Kriminal","Dugaan Korupsi","Fasilitas Umum"]
+    const opsi_pengaduan = ["Infrastruktur dan Fasilitas","Kebersihan dan Lingkungan","Keamanan dan Ketertiban","Pelayanan Publik dan aparatur","Tindakan Korupsi","Sosial dan Kemasyarakatan","Kesehatan","Lalu Lintas dan Transportasi","Perizinan dan Usaha","Lainnya"]
     
     
     //untuk mengumpulkan data form

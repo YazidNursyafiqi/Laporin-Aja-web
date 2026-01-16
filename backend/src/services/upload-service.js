@@ -16,8 +16,9 @@ const uploadService = (data,image)=>{
     })
     //update status jumlah postingan di wilayah tertentu
     db.collection('regions').doc('general').update(
-        {[data.provinsi]: admin.firestore.FieldValue.increment(1)}
-    )
+        {[`${data.provinsi}.total`] : admin.firestore.FieldValue.increment(1),
+        [`${data.provinsi}.type.${data.jenis_pengaduan}`]: admin.firestore.FieldValue.increment(1)
+        })
 
 }
 
