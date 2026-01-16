@@ -3,7 +3,7 @@ import Post from "../../../../component/posts/Post"
 import getPosts from "../../../../hooks/getPosts"
 
 
-export default function Teratas(){
+export default function Laporan(){
     const [loaded,setLoaded] = useState(false)
     const [content , setContent] = useState(null)
     const [page,setPage] = useState(1)
