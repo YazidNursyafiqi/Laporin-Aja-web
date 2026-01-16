@@ -69,7 +69,7 @@ function Maps() {
   useEffect(() => {
     const move = (e) => {
       if (cardRef.current) {
-        const x = e.clientX + 20;
+        const x = e.clientX - 300;
         const y = e.clientY + 20;
         cardRef.current.style.transform = `translate(${x}px, ${y}px)`;
       }
