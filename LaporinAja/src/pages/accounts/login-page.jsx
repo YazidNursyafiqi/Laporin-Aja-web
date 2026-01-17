@@ -1,6 +1,7 @@
 import { useState } from "react"
 import loginAccount from "../../hooks/loginAccount"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
+import styles from "./account-page.module.css";
 
 function Login(){
     const navigate = useNavigate()
@@ -28,21 +29,51 @@ function Login(){
 
     return(
         <>
-            <form onSubmit={handleLogin}>
-                <label>
-                    Username
-                </label>
-                <input type="text" value={loginForm.username} name="username" onChange={handleChange}></input>
-                <br />
-                <label>
-                    Password
-                </label>
-                <input type="password" value={loginForm.password} name="password" onChange={handleChange}></input>
-                <br />
-                <button type="submit">Submit</button>
-            </form>
-            <p>{statusLogin}</p>
+            <div className={styles.container}>
+                <div className={styles.card}>
+                    <h1 className={styles.title}>
+                    Laporin<span className={styles.highlight}>Aja</span>
+                    </h1>
+                    <p className={styles.subtitle}>Silahkan Login terlebih dahulu</p>
 
+                    <form onSubmit={handleLogin}>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Username</label>
+                        <input
+                        className={styles.input}
+                        type="text"
+                        name="username"
+                        value={loginForm.username}
+                        onChange={handleChange}
+                        placeholder="Masukkan username"
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Password</label>
+                        <input
+                        className={styles.input}
+                        type="password"
+                        name="password"
+                        value={loginForm.password}
+                        onChange={handleChange}
+                        placeholder="Masukkan password"
+                        />
+                    </div>
+
+                    <button type="submit" className={styles.button}>
+                        Login
+                    </button>
+                    </form>
+
+                    <p className={styles.footerText}>
+                    Belum punya akun? 
+                    <Link to="/register" className={styles.link}>Register</Link>
+                    </p>
+
+                    {statusLogin && <p style={{color: 'red', marginTop: '10px'}}>{statusLogin}</p>}
+                </div>
+            </div>
         </>
     )
 }
