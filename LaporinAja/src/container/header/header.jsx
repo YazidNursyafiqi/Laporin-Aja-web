@@ -9,8 +9,8 @@ function Header(){
             </div>
 
             <div id={styles.header_right_side}>
-                <a href=''>Beranda</a>
-                <a href=''>Tentang</a>
+                <a href='/ViewProblems/Laporan'>Beranda</a>
+                <a href='/About'>Tentang</a>
 
                 <div className={styles.search_container}>
                     <input 
