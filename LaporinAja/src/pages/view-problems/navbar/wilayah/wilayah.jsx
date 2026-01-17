@@ -8,7 +8,7 @@ function ListProvince({name,data}){
 
     //variabel berisi data jenis permasalahan yang telah di sortir dari terbesar ke terkecil
     const typeSorted = Object.entries(data.type).sort((a,b)=>b[1]-a[1])
-    console.log(typeSorted)
+    //console.log(typeSorted)
 
     const change = ()=>{
         if(expand){
@@ -57,7 +57,6 @@ function Wilayah(){
         async function x(){
             const result = await getProvinceStatus()
             const content = Object.entries(result.content)
-            console.log(content)
             //sortir result
             const resultSorted = content.sort((a,b)=>b[1].total-a[1].total)
             setMapData(Object.fromEntries(resultSorted))

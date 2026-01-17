@@ -28,7 +28,6 @@ function Maps({mapData}){
     const setupProvinceOpacity = (provinceData)=>{
         const content = provinceData.result
         const maxValue = provinceData.maxValue
-        console.log(maxValue)
 
         Object.keys(content).forEach(key=>{
             const path = vectorRef.current.querySelector(`#${key}`)

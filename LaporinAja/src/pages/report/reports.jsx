@@ -7,7 +7,7 @@ import checkAuth from "../../hooks/checkAuth.js";
 import { useNavigate } from "react-router-dom";
 
 //import data wilayah di indonesia
-import region from './province.json'
+import region from '../../component/province.json'
 
 function PerpetratorItem({name,role,onDelete}){
     return(

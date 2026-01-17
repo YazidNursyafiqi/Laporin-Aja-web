@@ -1,6 +1,10 @@
 import { useState , useEffect } from "react"
 import Post from "../../../../component/posts/Post"
 import getPosts from "../../../../hooks/getPosts"
+import styles from "./teratas.module.css"
+import region from '../../../../component/province.json'
+
+const opsi_pengaduan = ["Infrastruktur dan Fasilitas","Kebersihan dan Lingkungan","Keamanan dan Ketertiban","Pelayanan Publik dan aparatur","Tindakan Korupsi","Sosial dan Kemasyarakatan","Kesehatan","Lalu Lintas dan Transportasi","Perizinan dan Usaha","Lainnya"]
 
 
 export default function Teratas(){
@@ -8,12 +12,12 @@ export default function Teratas(){
     const [content , setContent] = useState(null)
     const [page,setPage] = useState(1)
     const [maxPage,setMaxPage] = useState(1)
-    
+    const [mode,setMode] = useState("Newest") // lihat postingan berdasarkan mode
 
     //load pertama kali
-    const loadPost = async(start_end_at,forward)=>{
-        console.log("start")
-        const response = await getPosts("Newest",start_end_at,forward)
+    const loadPost = async(mode,postIdQuery,provinceQuery,typeQuery,forward)=>{
+        const response = await getPosts(mode,{ postId:postIdQuery, province:provinceQuery, type:typeQuery, forward:forward })//semua query di masukkan dalam 1 objek
+        console.log(response)
         if(response.status != "not-connect"){
             //terhubung ke server
             // const temp = content
@@ -30,21 +34,51 @@ export default function Teratas(){
     //page selanjutnya
     const forward = async()=>{
         setLoaded(false)
-        await loadPost(content[content.length-1].date,true)
+
+        await loadPost(mode,content[content.length-1].id,province,problemType,true)
         setPage(page+1)
     }
     const backwward = async()=>{
         setLoaded(false)
-        await loadPost(content[0].date,false)
+        
+        await loadPost(mode,content[0].id,province,problemType,false)
         setPage(page-1)
     }
 
     useEffect(()=>{
-        loadPost()
+        loadPost(mode)
     },[])
+
+    //kumpulan fungsi lihat berdasarkan
+    const [province,setProvince] = useState('Provinsi Aceh') //default province
+    const [problemType,setProblemType] = useState('Infrastruktur dan Fasilitas') //default type
+    const handleChangeMode = async(type)=>{
+        setLoaded(false)
+        setMode(type)
+        console.log(mode)
+        await loadPost(type,null,province,problemType)
+    }
 
     return(
         <>  
+           <div id={styles.postMode}>
+                <button onClick={()=>handleChangeMode('Newest')}>Terbaru</button>
+                <button onClick={()=>handleChangeMode('Oldest')}>Terlama</button>
+                <button onClick={()=>handleChangeMode('Likes')}>Like</button>
+                <button onClick={()=>handleChangeMode('Province')}>Wilayah</button>
+                <select onChange={(e)=>setProvince(e.target.value)}>
+                    {region.map(val=>(
+                        <option>{val.province}</option>
+                    ))}
+                </select>
+                <button onClick={()=>handleChangeMode('Type')}>Jenis</button>
+                <select onChange={(e)=>setProblemType(e.target.value)}>
+                    {opsi_pengaduan.map(val=>(
+                        <option>{val}</option>
+                    ))}
+                </select>
+           </div>
+
             {loaded?(
                 <>
                     {content? (
