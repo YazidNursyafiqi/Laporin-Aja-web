@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL
 
-function Post({from,likes,comments,province,regency,type,perpetrator,victim,explain,image,postId}){
+export function Post({from,likes,comments,province,regency,type,perpetrator,victim,explain,image,postId}){
     const navigate = useNavigate()
     
     const [likeState,setLikes] = useState(likes)
@@ -31,7 +31,11 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
     const handleLike = async()=>{
         const response = await sendLike(postId)
         if(response.status == 'succeed'){
-            setLikeSend(likeSend+1)
+            if(response.mode == 'like'){
+                setLikeSend(likeSend+1)
+            }else{
+                setLikeSend(likeSend-1)
+            }
         }
     }
 
@@ -106,5 +110,3 @@ function Post({from,likes,comments,province,regency,type,perpetrator,victim,expl
         </div>
     )
 }
-
-export default Post

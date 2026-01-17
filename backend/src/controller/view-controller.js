@@ -1,4 +1,4 @@
-import {viewService , getProvinceStatusService} from "../services/view-service.js"
+import {viewService , getProvinceStatusService , getLikesService} from "../services/view-service.js"
 
 export const viewController = async (req,res)=>{
     const param = req.params.type
@@ -18,5 +18,18 @@ export const getProvinceStatusController = async(req,res)=>{
         res.json({status:"succeed",content:result})
     }catch{
         res.json({status:"server-error"})
+    }
+}
+
+export const getLikesController = async(req,res)=>{
+    const username = req.cookies.username
+    const forward = req.query.forward === "true" || req.query.forward === undefined
+    const postId = req.query.postId
+
+    try{
+        const result = await getLikesService(username,postId,forward)
+        res.json(result)
+    }catch{
+        res.json({status:'server-error'})
     }
 }
