@@ -8,18 +8,19 @@ export const commentController = async(req,res)=>{
         console.log(req.body)
         await commentService(comment,username,postId)
         res.json({status:"succeed",name:username})
-    }catch{
+    }catch(err){
         res.json({status:"server-error"})
     }
     
 }
 
 export const likeController = async(req,res)=>{
-    try{
+    // try{
+        const username = req.cookies.username
         const postID = req.body.postID
-        await likeService(postID)
-        res.json({status:"succeed"})
-    }catch{
-        res.json({status:"server-error"})
-    }
+        const mode = await likeService(postID,username)
+        res.json({status:"succeed" , mode:mode})
+    // }catch(err){
+    //     res.json({status:"server-error"})
+    // }
 }

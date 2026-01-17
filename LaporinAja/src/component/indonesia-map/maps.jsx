@@ -4,7 +4,6 @@ import { useState , useRef , useEffect} from 'react'
 
 //fungsi untuk ubah spasi pada key jadi underscore
 const dataParse = (input)=>{
-    console.log(input)
     let maxValue = 0
     const result = {}
     Object.keys(input).forEach(key=>{
@@ -79,13 +78,12 @@ const dataLaporan = {
 };
 
 function Maps({mapData}){
-    const ref = useRef()
-    const vectorRef = useRef()
-    //state untuk card/popup
-    const [provinceHover, setProvinceHover] = useState(null); //memeriksa apakah
-    const cardRef = useRef(null);
-    const [hover,setHover] = useState(false)
-
+  const ref = useRef()
+  const vectorRef = useRef()
+  //state untuk card/popup
+  const [provinceHover, setProvinceHover] = useState(null); //memeriksa apakah
+  const cardRef = useRef(null);
+  const [hover,setHover] = useState(false)
 
     //fungsi untuk mengatur tingkat opasitas warna per provinsi berdasarkan jumlah laporan
     const setupProvinceOpacity = (provinceData)=>{
@@ -120,9 +118,10 @@ function Maps({mapData}){
     },[])
 
   const handleMouseEnter = (idProvinsi) => {
-      const data = dataLaporan[idProvinsi];
+    const idWithoutUnderscore = idProvinsi.replaceAll('_',' ')
+      const data = mapData[idWithoutUnderscore];
       if (data) {
-        setProvinceHover(data);
+        setProvinceHover({data:data,title:idWithoutUnderscore});
         setHover(true);
       }
   };
@@ -148,9 +147,9 @@ function Maps({mapData}){
                 >
                     {provinceHover && (
                     <HoverCard 
-                        provinceName={provinceHover.name}
-                        totalReports={provinceHover.total}
-                        top3={provinceHover.top3}
+                        provinceName={provinceHover.title}
+                        totalReports={provinceHover.data.total}
+                        top3={provinceHover.data.type}
                     />
                     )}
                 </div>

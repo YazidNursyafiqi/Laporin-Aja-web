@@ -59,7 +59,6 @@ function Wilayah(){
             const content = Object.entries(result.content)
             //sortir result
             const resultSorted = content.sort((a,b)=>b[1].total-a[1].total)
-            console.log(resultSorted)
             setMapData(Object.fromEntries(resultSorted))
             setMapLoaded(true)
         }

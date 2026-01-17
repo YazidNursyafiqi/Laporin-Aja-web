@@ -95,6 +95,35 @@ export const viewService = async (param,postId,province,type,forward) => {
     return {content:result,totalPost:total}
 }
 
+export const getLikesService = async(username,postId,forward)=>{
+    const account = await db.collection('accounts').where('username','==',username).limit(1).get()
+    const likeList = account.docs[0].data().likes 
+    const likeTotal = likeList.length
+    const postList = []
+
+    //atur load postingan start atau end sampai mana (berlaku untuk forward)
+    let loadList = []
+    if(postId == undefined){ //awal load
+        loadList = likeList.slice(0,5)
+    }else{ //next/back
+        if(forward){  //forward
+            const indexCursor = likeList.indexOf(postId)
+            loadList = likeList.slice(indexCursor+1,indexCursor + 6)
+        }else{
+            const indexCursor = likeList.indexOf(postId)
+            loadList = likeList.slice((indexCursor-5 < 0 ? 0 : indexCursor-5),indexCursor)
+        }
+    }
+
+    //isi array postlist berdasarkan array likeList berisi PostId yang di ambil dari account
+    for(const id of loadList){
+        const postResult = await db.collection('reports').where('id','==',id).limit(1).get()
+        postList.push(postResult.docs[0].data())
+    }
+
+    return {content:postList,totalPost:likeTotal}
+}
+
 export const getProvinceStatusService = async()=>{
     const result = await db.collection('regions').doc('general').get()
     return result.data()

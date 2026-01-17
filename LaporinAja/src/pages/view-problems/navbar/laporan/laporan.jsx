@@ -1,5 +1,5 @@
 import { useState , useEffect } from "react"
-import Post from "../../../../component/posts/Post"
+import {Post} from "../../../../component/posts/Post"
 import getPosts from "../../../../hooks/getPosts"
 import styles from "./laporan.module.css"
 import region from '../../../../component/province.json'
