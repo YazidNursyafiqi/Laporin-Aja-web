@@ -1,4 +1,3 @@
-/* Container Utama */
 .container {
   display: flex;
   flex-direction: column;
@@ -16,8 +15,7 @@
   box-sizing: border-box;
 }
 
-/* Section 1: Hero */
-.heroSection {
+.mainSection {
   text-align: center;
   padding: 80px 20px 60px;
 }
@@ -31,9 +29,9 @@
 }
 
 .highlight {
-  color: #0a0a23; /* Menyesuaikan warna Header LaporinAja */
+  color: #0a0a23;
   text-decoration: underline;
-  text-decoration-color: #0a0a23; /* Aksen hijau untuk kesan solusi/positif */
+  text-decoration-color: #0a0a23; 
 }
 
 .subtitle {
@@ -44,9 +42,8 @@
   line-height: 1.6;
 }
 
-/* Section 3: Story */
 .storySection {
-  background-color: #0a0a23; /* Warna gelap agar kontras */
+  background-color: #0a0a23;
   color: white;
   padding: 80px 40px;
   border-radius: 20px;
@@ -71,7 +68,6 @@
   opacity: 0.9;
 }
 
-/* Responsiveness untuk Mobile */
 @media (max-width: 768px) {
   .title {
     font-size: 2rem;

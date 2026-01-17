@@ -11,7 +11,7 @@ function About_page(){
             <Header/>
             <div className={styles.layout}>
                 <div className={styles.content}>
-                    <div className={styles.heroSection}>
+                    <div className={styles.mainSection}>
                     <h1 className={styles.title}>
                         Suarakan Masalah, Temukan <span className={styles.highlight}> Solusi.</span>
                     </h1>
@@ -21,7 +21,6 @@ function About_page(){
                     </p> */}
                     </div>
 
-                    {/* Section 3: Story / About Text */}
                     <div className={styles.storySection}>
                     <div className={styles.storyContent}>
                         <h2>Mengapa LaporinAja Dibuat?</h2>
