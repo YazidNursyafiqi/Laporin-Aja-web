@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Rounded_button , Link_button } from "../../component/button/buttonUI";
 
 //import data wilayah di indonesia
-import region from './province.json'
+import region from '../../component/province.json'
 
 function PerpetratorItem({name,role,onDelete}){
     return(
@@ -26,12 +26,13 @@ function Reports(){
     const [ accountName , setAccountName] = useState("User")
     const [ form , setForm ] = useState({
         kirim_sebagai:"",
-        jenis_pengaduan:"Kebersihan",
+        jenis_pengaduan:"Infrastruktur dan Fasilitas",
         provinsi:"Provinsi Aceh",
         kabupaten:"",
         penjelasan:"",
         kondisi_saat_ini:"Belum Terselesaikan",
         yang_terdampak:"Saya sendiri"
+        //default value
     })
     
     //fungsi untuk handle preview gambar
@@ -69,7 +70,7 @@ function Reports(){
         }
     }, [preview])
     
-    const opsi_pengaduan = ["Kebersihan dan Lingkungan","Tindakan Korupsi","Dugaan Korupsi","Infrastruktur dan Fasilitas", "Keamanan dan Ketertiban", "Pelayanan publik dan aparatur", "Sosial dan Kemasyarakatan", "Kesehatan", "Lalu Lintas dan Transportasi", "Perizinan dan Usaha", "Lainnya"]
+    const opsi_pengaduan = ["Infrastruktur dan Fasilitas","Kebersihan dan Lingkungan","Keamanan dan Ketertiban","Pelayanan Publik dan aparatur","Tindakan Korupsi","Sosial dan Kemasyarakatan","Kesehatan","Lalu Lintas dan Transportasi","Perizinan dan Usaha","Lainnya"]
     
     
     //untuk mengumpulkan data form
