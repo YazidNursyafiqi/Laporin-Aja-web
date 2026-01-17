@@ -27,6 +27,7 @@
     height: 100%;
     padding: 0;
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #title1{
@@ -34,7 +35,7 @@
 }
 
 #title2{
-    color: rgb(0, 212, 11);
+    color: rgb(0, 138, 212);
 }
 
 #header_right_side{

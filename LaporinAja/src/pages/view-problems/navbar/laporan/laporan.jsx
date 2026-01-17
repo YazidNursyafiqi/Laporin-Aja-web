@@ -1,13 +1,13 @@
 import { useState , useEffect } from "react"
 import Post from "../../../../component/posts/Post"
 import getPosts from "../../../../hooks/getPosts"
-import styles from "./teratas.module.css"
+import styles from "./laporan.module.css"
 import region from '../../../../component/province.json'
 
 const opsi_pengaduan = ["Infrastruktur dan Fasilitas","Kebersihan dan Lingkungan","Keamanan dan Ketertiban","Pelayanan Publik dan aparatur","Tindakan Korupsi","Sosial dan Kemasyarakatan","Kesehatan","Lalu Lintas dan Transportasi","Perizinan dan Usaha","Lainnya"]
 
 
-export default function Teratas(){
+export default function Laporan(){
     const [loaded,setLoaded] = useState(false)
     const [content , setContent] = useState(null)
     const [page,setPage] = useState(1)

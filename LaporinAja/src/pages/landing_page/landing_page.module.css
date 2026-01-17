@@ -1,0 +1,96 @@
+/* html {
+  background-color: rgb(224, 231, 241);
+} */
+
+.container {
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  padding: 20px;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.box {
+  background-color: rgb(22, 23, 83);
+  /* background-color: #f4efe9; */
+  margin: 30px auto 40px auto; 
+  max-width: 1100px;
+  width: 90%; /* supaya responsif tapi ternyata ttp tidak responsif aokwkwkokow */
+  padding: 50px;
+  border-radius: 20px; 
+}
+
+.topSection {
+  display: flex;
+  gap: 10px;
+  min-height: 500px;
+}
+
+.leftCol {
+  flex: 3; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: flex-start;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column; 
+  gap: 15px; 
+  text-align: left;
+}
+
+.textWrapper h1 {
+  font-size: 4rem;
+  margin: 0;
+  /* color: #333; */
+  color: white;
+}
+
+.textWrapper p {
+  font-size: 1.1rem;
+  /* color: #666; */
+  color: white;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.rightCol {
+  flex: 2; 
+  display: flex; 
+  justify-content: flex-end; 
+  align-items: center;
+}
+
+.bottomSection {
+  display: flex;
+  gap: 20px;
+  height: 50px; 
+}
+
+.leftBottom {
+  flex: 3; 
+  display: flex;
+  justify-content: flex-start; 
+  gap: 15px; 
+}
+
+.rightBottom {
+  flex: 2; 
+  display: flex;
+  justify-content: flex-end; 
+  
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+}
+
+#logo1 {
+    color: rgb(0, 138, 212);
+}

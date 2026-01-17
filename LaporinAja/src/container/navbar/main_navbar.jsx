@@ -17,8 +17,8 @@ function Navbar(){
         <div id={styles.main_navbar}>
             <nav>
                 <Navbar_option image='../../icons/location-pin.png' title='Wilayah' url='/ViewProblems/Wilayah'/>
-                <Navbar_option image='../../icons/teratas.png' title='Teratas' url='/ViewProblems/Teratas'/>
-                <Navbar_option image='../../icons/danger.png' title='Jenis' url='/ViewProblems/Jenis'/>
+                <Navbar_option image='../../icons/danger.png' title='Laporan' url='/ViewProblems/Laporan'/>
+                <Navbar_option image='../../icons/border-heart.png' title='Disukai' url='/ViewProblems/Disukai'/>
                 <Navbar_option image='../../icons/Done.svg' title='Terselesaikan' url='/ViewProblems/Terselesaikan'/>
             </nav>
         </div>
