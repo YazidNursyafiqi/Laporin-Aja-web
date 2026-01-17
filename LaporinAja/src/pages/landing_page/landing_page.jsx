@@ -23,7 +23,10 @@ function Landing_page(){
                                     <h1 id={style.logo1}>Aja</h1>
                                 </div>
                                 <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi vel illum nulla unde animi voluptatem consequatur minima pariatur magnam, cumque in nobis cum eaque velit corrupti exercitationem iste odit nisi.
+                                    Platform pelaporan masalah publik yang cepat dan transparan. 
+                                    Demi membangun lingkungan yang lebih nyaman 
+                                    dengan melaporkan hal-hal yang bermasalah 
+                                    di sekitar Anda. Suara Anda, awal perubahan kita.
                                 </p>
                             </div>
 
@@ -39,11 +42,11 @@ function Landing_page(){
 
                         <div className={style.leftBottom}>
                             <Rounded_button text="Adukan" onClick={() => navigate('/Reports')}/>
-                            <Rounded_button text="Lihat daftar pengaduan" onClick={() => navigate('/ViewProblems')}/>
+                            <Rounded_button text="Lihat daftar pengaduan" onClick={() => navigate('/ViewProblems/Wilayah')}/>
                         </div>
 
                     <div className={style.rightBottom}>
-                            <Link_button text="Tentang Kami"/>
+                            <Rounded_button text="Tentang Kami" onClick={() => navigate('/About')}/>
                         </div>
                     </div>
                 </div>

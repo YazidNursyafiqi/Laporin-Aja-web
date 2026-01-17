@@ -264,7 +264,7 @@ function Reports(){
             </div>
             <br />
             <input type="submit" value="Kirim" id={styles.button}/>
-            <button type="button" id={styles.button} onClick={() => navigate('/ViewProblems')}>Lihat daftar pengaduan</button>
+            <button type="button" id={styles.button} onClick={() => navigate('/ViewProblems/Wilayah')}>Lihat daftar pengaduan</button>
         </form>
 
         {hasSubmit ? (
