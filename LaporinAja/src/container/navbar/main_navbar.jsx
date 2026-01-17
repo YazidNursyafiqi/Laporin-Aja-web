@@ -19,7 +19,7 @@ function Navbar(){
                 <Navbar_option image='../../icons/location-pin.png' title='Wilayah' url='/ViewProblems/Wilayah'/>
                 <Navbar_option image='../../icons/danger.png' title='Laporan' url='/ViewProblems/Laporan'/>
                 <Navbar_option image='../../icons/border-heart.png' title='Disukai' url='/ViewProblems/Disukai'/>
-                <Navbar_option image='../../icons/Done.svg' title='Terselesaikan' url='/ViewProblems/Terselesaikan'/>
+                <Navbar_option image='../../icons/Done.svg' title='Terkirim' url='/ViewProblems/Terkirim'/>
             </nav>
         </div>
     );

@@ -8,6 +8,7 @@ import styles from "./view-problems.module.css";
 import Wilayah from "./navbar/wilayah/wilayah";
 import Laporan from "./navbar/laporan/laporan";
 import Disukai from "./navbar/disukai/disukai";
+import Terkirim from "./navbar/terkirim/terkirim";
 
 function ViewProblems_page(){
     return(
@@ -21,6 +22,7 @@ function ViewProblems_page(){
                         <Route path="/Wilayah" element={<Wilayah/>}/>
                         <Route path="/Laporan" element={<Laporan/>}/>
                         <Route path="/Disukai" element={<Disukai/>}/>
+                        <Route path="/Terkirim" element={<Terkirim/>}/>
                     </Routes>
                 </div>
             </div>
