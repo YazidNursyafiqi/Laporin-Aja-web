@@ -9,6 +9,7 @@ import ViewProblems_page from './pages/view-problems/view-problems';
 import Login from './pages/accounts/login-page';
 import Register from './pages/accounts/register-page';
 import About_page from './pages/about_page/about_page';
+import ProfilePage from './pages/accounts/profile-page';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/ViewProblems/*' element={<ViewProblems_page/>}/>
         <Route path='/Login' element={<Login/>}/>
         <Route path='/Register' element={<Register/>}/>
+        <Route path='/Account' element={<ProfilePage/>}/>
         <Route path='/About' element={<About_page/>}/>
       </Routes>
     </>

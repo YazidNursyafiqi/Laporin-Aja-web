@@ -3,7 +3,7 @@ const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL
 
 function registerAccount(data){
     return axios.post(`${API_BASE_URL}/Register`,data)
-        .then(res => res.data.message)
+        .then(res => res.data)
         .catch(err=>"Terjadi Kesalahan")
 }
 
