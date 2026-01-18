@@ -14,3 +14,10 @@
   height: calc(100vh - 75px);
   overflow-y: auto;
 }
+
+@media screen and (max-width:900px) {
+  .content{
+    margin-left: 0px;
+    margin-top: 40px;
+  }
+}
