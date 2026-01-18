@@ -1,5 +1,7 @@
 import styles from './header.module.css';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 function Header(){
     const [mobile,setMobile] = useState(false)
 
@@ -19,8 +21,11 @@ function Header(){
             </div>
 
             <div id={styles.header_right_side}>
-                <a href='/ViewProblems/Laporan'>Beranda</a>
-                <a href='/About'>Tentang</a>
+                <div id={styles.header_button}>
+                    <a href='/Reports'>Adukan</a>
+                    <a href='/ViewProblems/Laporan'>Beranda</a>
+                    <a href='/About'>Tentang</a>
+                </div>
 
                 <div className={styles.search_container}>
                     <input 
@@ -30,9 +35,9 @@ function Header(){
                     />
                     <span className={styles.search_icon}>🔍</span>
                 </div>
-                <div id={styles.profile}>
-                    <img src='/icons/user.png'/>
-                </div>
+                <Link to ="/account" className={styles.profile}>
+                        <img src='/icons/user.png'/>
+                </Link>
 
             </div>
             <div id={styles.mobileMenu}>
@@ -46,6 +51,8 @@ function Header(){
                             <a href='/About'>Tentang</a>
                         </div>
                 ):null}
+
+
             </div>
         </div>
     );

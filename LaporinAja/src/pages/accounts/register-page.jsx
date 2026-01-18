@@ -5,6 +5,8 @@ import styles from "./account-page.module.css";
 import { useNavigate } from "react-router-dom";
 
 function Register(){
+    const navigate = useNavigate();
+
     const [ registerForm , setRegisterForm ] = useState({
         username:"",
         password:"",
@@ -20,34 +22,28 @@ function Register(){
         if (successMessage) setSuccessMessage("");
     }
 
+
     const handleRegister = async (e)=>{
         e.preventDefault()
         if (registerForm.password !== registerForm.confirmPassword) {
             setErrorMessage("Password dan Konfirmasi Password tidak cocok!");
-            return; // Stop, jangan lanjut ke bawah
+            return; 
         } 
 
-        // 2. PANGGIL FUNGSI REGISTER & TUNGGU HASILNYA
         try {
-            // Kita anggap registerAccount mengembalikan status atau string "Succed"
-            // (Sesuaikan logic ini dengan isi file registerAccount.js Anda)
             const result = await registerAccount(registerForm);
 
-            console.log("Hasil Register:", result); // Cek di console browser
+            console.log("Hasil Register:", result);
 
-            // 3. CEK HASIL DARI BACKEND/FIREBASE
-            // Ganti kondisi ini sesuai apa yang dikembalikan registerAccount.js
-            // Bisa jadi if (result === "Succed") atau if (result.status === "Succed")
-            if (result === "Succed" || result?.status === "Succed") { 
+            if (result === "berhasil" || result?.status === "berhasil") { 
             setErrorMessage(""); // Hapus error jika ada
             setSuccessMessage("Registrasi Berhasil! Mengalihkan...");
             
-            // Redirect otomatis setelah 2 detik
             setTimeout(() => {
                 navigate('/login'); 
             }, 2000);
-
-            return;
+            } else {
+            setErrorMessage("Gagal mendaftar. Silakan coba lagi.");
             }
 
         } catch (error) {

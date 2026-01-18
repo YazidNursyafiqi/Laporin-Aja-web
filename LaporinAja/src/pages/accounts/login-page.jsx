@@ -5,7 +5,7 @@ import styles from "./account-page.module.css";
 
 function Login(){
     const navigate = useNavigate()
-    const [ statusLogin , setStatusLogin ] = useState("-")
+    const [ statusLogin , setStatusLogin ] = useState("")
 
     const [ loginForm , setLoginForm ] = useState({
         username:"",

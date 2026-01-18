@@ -54,7 +54,7 @@
     transition: 0.3s;
 }
 
-#header_right_side a:hover{
+#header_button a:hover{
     transition: 0.3s;
     background-color: rgb(20, 23, 86);
 }
@@ -83,13 +83,13 @@
   color: #666;
 }
 
-#profile{
+.profile{
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-#profile img{
+.profile img{
     height: 70%;
 }
 
