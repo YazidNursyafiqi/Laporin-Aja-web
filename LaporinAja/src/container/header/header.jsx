@@ -23,7 +23,7 @@ function Header(){
             <div id={styles.header_right_side}>
                 <div id={styles.header_button}>
                     <a href='/Reports'>Adukan</a>
-                    <a href='/ViewProblems/Laporan'>Beranda</a>
+                    <a href='/'>Beranda</a>
                     <a href='/About'>Tentang</a>
                 </div>
 
