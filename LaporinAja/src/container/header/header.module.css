@@ -6,6 +6,7 @@
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    z-index: 9;
 }
 
 #header_left_side , #header_right_side{
@@ -90,4 +91,54 @@
 
 #profile img{
     height: 70%;
+}
+
+#mobileMenu{
+    display: none;
+}
+
+
+
+@media screen and (max-width:800px) {
+    #header_right_side{
+        display: none;
+    }
+    #mobileMenu{
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+    #sideMenuToggle{
+        background-color: rgba(240, 248, 255, 0);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        border: none;
+        padding: 0px 10px 0px 10px;
+    }
+    #sideMenuToggle:hover{
+        background-color: rgba(255, 255, 255, 0.144);
+    }
+    #sideMenuToggle img{
+        background-color: rgba(240, 248, 255, 0);
+        height: 45%;
+    }
+    #sideMenu{
+        background-color: rgb(1, 2, 77);
+        position: fixed; top: 55px; left: 0;;
+        height: 200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    #sideMenu a{
+        color: aliceblue;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 20px;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width:300px) {
 }
