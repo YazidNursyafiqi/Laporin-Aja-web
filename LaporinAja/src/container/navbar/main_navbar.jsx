@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 function Navbar_option({image,title,url}){
     return(
-        <Link to={url}>
+        <Link className={styles.link} to={url}>
             <div className={styles.navbar_option}>
                 <img src={image}/>
                 <p>{title}</p>
