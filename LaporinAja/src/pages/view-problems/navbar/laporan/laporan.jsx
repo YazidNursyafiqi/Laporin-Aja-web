@@ -62,17 +62,17 @@ export default function Laporan(){
     return(
         <>  
            <div id={styles.postMode}>
-                <button onClick={()=>handleChangeMode('Newest')}>Terbaru</button>
-                <button onClick={()=>handleChangeMode('Oldest')}>Terlama</button>
-                <button onClick={()=>handleChangeMode('Likes')}>Like</button>
-                <button onClick={()=>handleChangeMode('Province')}>Wilayah</button>
-                <select onChange={(e)=>setProvince(e.target.value)}>
+                <button id={styles.button} onClick={()=>handleChangeMode('Newest')}>Terbaru</button>
+                <button id={styles.button} onClick={()=>handleChangeMode('Oldest')}>Terlama</button>
+                <button id={styles.button} onClick={()=>handleChangeMode('Likes')}>Like</button>
+                <button id={styles.button} onClick={()=>handleChangeMode('Province')}>Wilayah</button>
+                <select id={styles.placeholder} onChange={(e)=>setProvince(e.target.value)}>
                     {region.map(val=>(
                         <option>{val.province}</option>
                     ))}
                 </select>
-                <button onClick={()=>handleChangeMode('Type')}>Jenis</button>
-                <select onChange={(e)=>setProblemType(e.target.value)}>
+                <button id={styles.button} onClick={()=>handleChangeMode('Type')}>Jenis</button>
+                <select id={styles.placeholder} onChange={(e)=>setProblemType(e.target.value)}>
                     {opsi_pengaduan.map(val=>(
                         <option>{val}</option>
                     ))}
@@ -93,8 +93,8 @@ export default function Laporan(){
                             )}
                             {/* navigasi halaman */}
                             <div>
-                                <button onClick={backwward} disabled={page == 1}>Prev</button>
-                                <button onClick={forward} disabled={page == maxPage}>Next</button>
+                                <button id={styles.button} onClick={backwward} disabled={page == 1}>Prev</button>
+                                <button id={styles.button} onClick={forward} disabled={page == maxPage}>Next</button>
                             </div>
                         </>
                     ) : (
