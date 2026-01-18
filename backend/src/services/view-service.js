@@ -128,3 +128,17 @@ export const getProvinceStatusService = async()=>{
     const result = await db.collection('regions').doc('general').get()
     return result.data()
 }
+
+export const getMyPostsService = async(username)=>{
+    const snapshot = await db.collection('accounts').where('username','==',username).limit(1).get()
+    const postIdList = snapshot.docs[0].data().posts
+    const postContentList = []
+    console.log(postIdList)
+
+    for(const id of postIdList){
+        const data = await db.collection('reports').where('id','==',id).limit(1).get() 
+        postContentList.unshift(data.docs[0].data())
+    }
+
+    return({content:postContentList})
+}
