@@ -35,15 +35,15 @@ function Register(){
 
             console.log("Hasil Register:", result);
 
-            if (result === "berhasil" || result?.status === "berhasil") { 
-            setErrorMessage(""); // Hapus error jika ada
-            setSuccessMessage("Registrasi Berhasil! Mengalihkan...");
-            
-            setTimeout(() => {
-                navigate('/login'); 
-            }, 2000);
+            if (result.status === "succeed") { 
+                setErrorMessage(""); // Hapus error jika ada
+                setSuccessMessage("Registrasi Berhasil! Mengalihkan...");
+                
+                setTimeout(() => {
+                    navigate('/login'); 
+                }, 2000);
             } else {
-            setErrorMessage("Gagal mendaftar. Silakan coba lagi.");
+            setErrorMessage(result.status);
             }
 
         } catch (error) {
