@@ -77,7 +77,7 @@ export default function PostPreview({content}){
                                 </div>
                                 <div id={styles.deletePopupMenu}>
                                     <button onClick={handleDelete}>Ya</button>
-                                    <button onClick={()=>setDeletePopup(false)}>Kembali</button>
+                                    <button id={styles.backButton} onClick={()=>setDeletePopup(false)}>Kembali</button>
                                 </div>
                             </>
                         ):(
@@ -90,7 +90,7 @@ export default function PostPreview({content}){
                                             <p>{deleteResult}</p>
                                         </div>
                                         <div id={styles.deletePopupMenu}>
-                                            <button onClick={()=>window.location.reload()}>Kembali</button>
+                                            <button id={styles.backButton} onClick={()=>window.location.reload()}>Kembali</button>
                                         </div>
                                     </>
                                 )}

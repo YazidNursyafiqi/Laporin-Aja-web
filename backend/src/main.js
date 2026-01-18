@@ -28,7 +28,4 @@ app.use("/interract",interractRoutes)
 app.use("/delete",deleteRoute)
 app.use("/account",manageAccountRoute)
 
-
-app.listen(3000,()=>{
-    console.log("server berhasil di jalankan")
-})
+export default app
