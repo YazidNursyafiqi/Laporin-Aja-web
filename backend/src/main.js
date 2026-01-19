@@ -14,8 +14,27 @@ import deleteRoute from "./routes/delete-routes.js"
 import manageAccountRoute from "./routes/manageAccount-routes.js"
 
 const app = express()
-app.use(cors({origin:"http://localhost:5173",credentials:true}))
 app.use(cookieParser())
+
+//setup cors
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://laporin-aja-jbndcubil-yazid-nursyafiqis-projects.vercel.app/"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS ditolak"));
+    }
+  },
+  credentials: true
+}));
+
+app.options("*", cors());
 
 //routes API
 app.use("/upload",uploadRoute) 
