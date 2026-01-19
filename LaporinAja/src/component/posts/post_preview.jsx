@@ -47,8 +47,8 @@ export default function PostPreview({content}){
                         </p>
                     </div>
                     <div id={styles.menu}>
-                        <button onClick={handleView}>Lihat</button>
-                        <button onClick={()=>setDeletePopup(true)}>Hapus</button>
+                        <button id={styles.backButton} onClick={handleView}>Lihat</button>
+                        <button id={styles.delButton} onClick={()=>setDeletePopup(true)}>Hapus</button>
                     </div>
                 </div>
                 <div>
@@ -63,7 +63,7 @@ export default function PostPreview({content}){
                             <Post postId={content["id"]} type={content["jenis_pengaduan"]} province={content["provinsi"]} regency={content["kabupaten"]} from={content["kirim_sebagai"]} explain={content["penjelasan"]} image={content["imagePath"]} perpetrator={content["yang_terkait"]} comments={content["comments"]} likes={content["likes"]}/>
                         </div>
                     </div>
-                    <button onClick={handleView}>kembali</button>
+                    <button id={styles.backButton} onClick={handleView}>Kembali</button>
                 </div>
             ):null}
 
@@ -76,7 +76,7 @@ export default function PostPreview({content}){
                                     <p>Apakah anda yakin ingin menghapus Laporan ini?</p>
                                 </div>
                                 <div id={styles.deletePopupMenu}>
-                                    <button onClick={handleDelete}>Ya</button>
+                                    <button id={styles.delButton} onClick={handleDelete}>Ya</button>
                                     <button id={styles.backButton} onClick={()=>setDeletePopup(false)}>Kembali</button>
                                 </div>
                             </>
