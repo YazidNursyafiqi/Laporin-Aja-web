@@ -9,7 +9,10 @@ export const loginController = async(req,res)=>{
     if("sessionToken" in result){
         console.log("iyo ada")
         res.cookie("token",result.sessionToken,{
-            httpOnly:true
+            httpOnly:true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 6 * 60 * 60 * 1000
         })
         res.cookie("username",input.username,{
             httpOnly:true
