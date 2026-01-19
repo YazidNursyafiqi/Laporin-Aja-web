@@ -34,7 +34,6 @@ app.use(cors({
   credentials: true
 }));
 
-app.options("*", cors());
 
 //routes API
 app.use("/upload",uploadRoute) 
