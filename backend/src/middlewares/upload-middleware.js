@@ -1,14 +1,10 @@
 import multer from "multer";
 
-const storage = multer.diskStorage({
-    destination : (req,file,cb)=>{
-        cb(null,"uploads/")
-    },
-    filename : (req,file,cb)=>{
-        const cap = Date.now()
-        const name = cap + file.originalname
-        cb(null,name)
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        filesize: 5*1024*1024 //5mb
     }
 })
 
-export const uploadMiddleware = multer({storage:storage})
+export default upload

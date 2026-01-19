@@ -1,11 +1,10 @@
 import admin from "firebase-admin"
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+import "dotenv/config";
 
-const firebaseConfig = require('../../key/firebase-private-key.json')
+const key = JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
 
 admin.initializeApp({
-    credential: admin.credential.cert(firebaseConfig)
+    credential: admin.credential.cert(key)
 })
 
 export default admin

@@ -1,2 +1,3 @@
 firebase-private-key.json
 *.jpg
+.env

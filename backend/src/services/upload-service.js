@@ -3,7 +3,7 @@ import db from "../application/firestore.js"
 import admin from "../config/firebase.js"
 
 const uploadService = async(data,image,username)=>{
-    const imageDest = image?.filename || "no-image"
+    const imageDest = image == null ? 'no-image' : image.url
     const date = Date.now()
     const id = `${date}${Math.round(Math.random()*100000)}`
 
