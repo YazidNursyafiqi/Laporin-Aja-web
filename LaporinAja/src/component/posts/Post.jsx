@@ -56,7 +56,7 @@ export function Post({from,likes,comments,province,regency,type,perpetrator,vict
                         {explain}
                     </div>
                     <div id={styles.image}>
-                        <img src={`${API_BASE_URL}/images/${image}`}></img>
+                        <img src={image}></img>
                     </div>
                     <div id={styles.perpetrator}>
                         <p>Siapa saja yang terkait:</p>
