@@ -12,11 +12,14 @@ export const uploadController = async (req , res) => {
                 access:"public",
                 contentType: req.file.mimetype
             })
+            res.json({
+                status:"Upload Berhasil!"
+            })
         }
 
         await uploadService(req.body,file,username)
-    }catch{
-        console.log('database error')
+    }catch(err){
+        console.log(err)
         res.json({
             status:"server-error"
         })

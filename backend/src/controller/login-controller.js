@@ -15,7 +15,10 @@ export const loginController = async(req,res)=>{
             maxAge: 6 * 60 * 60 * 1000
         })
         res.cookie("username",input.username,{
-            httpOnly:true
+            httpOnly:true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 6 * 60 * 60 * 1000
         })
     }
 
