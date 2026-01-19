@@ -70,8 +70,8 @@ export default function Disukai(){
                             )}
                             {/* navigasi halaman */}
                             <div>
-                                <button onClick={backwward} disabled={page == 1}>Prev</button>
-                                <button onClick={forward} disabled={page == maxPage}>Next</button>
+                                <button id={styles.button} onClick={backwward} disabled={page == 1}>Prev</button>
+                                <button id={styles.button} onClick={forward} disabled={page == maxPage}>Next</button>
                             </div>
                         </>
                     ) : (
