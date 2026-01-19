@@ -19,7 +19,7 @@ app.use(cookieParser())
 //setup cors
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://laporin-aja-jbndcubil-yazid-nursyafiqis-projects.vercel.app/"
+  "https://laporin-aja-jbndcubil-yazid-nursyafiqis-projects.vercel.app"
 ];
 
 app.use(cors({
