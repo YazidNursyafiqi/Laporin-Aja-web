@@ -8,18 +8,16 @@ export const loginController = async(req,res)=>{
     //kirim token ke coockie client (jika ada)
     if("sessionToken" in result){
         console.log("iyo ada")
-        res.cookie("token",result.sessionToken,{
-            httpOnly:true,
-            secure: true,
-            sameSite: "none",
-            maxAge: 6 * 60 * 60 * 1000
-        })
-        res.cookie("username",input.username,{
-            httpOnly:true,
-            secure: true,
-            sameSite: "none",
-            maxAge: 6 * 60 * 60 * 1000
-        })
+        const isProd = process.env.NODE_ENV === "production";
+        const cookieOptions = {
+            httpOnly: true,
+            secure: isProd,
+            sameSite: isProd ? "none" : "lax",
+            maxAge: 6 * 60 * 60 * 1000,
+            path: "/"
+        };
+        res.cookie("token", result.sessionToken, cookieOptions);
+        res.cookie("username", input.username, cookieOptions);
     }
 
     res.json(result)

@@ -5,7 +5,7 @@
     padding: 16px;
     margin: 10px 0;
     display: flex;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 }
 
 #cropperContainer {
@@ -33,10 +33,9 @@
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 2px 8px var(--primary-glow);
+    box-shadow: none;
 }
 
 #buttonContainer button:hover {
     background-color: var(--primary-hover);
-    transform: translateY(-2px);
 }

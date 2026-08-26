@@ -32,7 +32,9 @@ export default function Terkirim(){
                 ))}
             </>
             ):(
-                <>loading</>
+                <div className="loadingContainer">
+                    <div className="loadingText">Memuat Laporan Terkirim...</div>
+                </div>
             )}
         </>
     )

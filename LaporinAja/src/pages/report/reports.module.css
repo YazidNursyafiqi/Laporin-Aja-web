@@ -1,5 +1,19 @@
-html {
+.layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  flex: 1;
+  padding-top: 64px;
+}
+
+.content {
+  margin-left: 240px;
+  flex: 1;
+  padding: 30px;
+  width: calc(100% - 240px);
+  height: calc(100vh - 64px);
   overflow-y: auto;
+  background-color: transparent;
 }
 
 #container {
@@ -7,8 +21,8 @@ html {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  margin: 100px auto 40px auto;
+  box-shadow: none;
+  margin: 20px auto 40px auto;
   max-width: 900px;
   border-radius: 20px;
   padding: 40px;
@@ -16,6 +30,15 @@ html {
   font-size: 1rem;
   color: var(--text-main);
   animation: slideUp 0.6s ease-out forwards;
+}
+
+@media screen and (max-width: 900px) {
+  .content {
+    margin-left: 0;
+    margin-top: 64px;
+    height: calc(100vh - 128px);
+    padding: 20px;
+  }
 }
 
 #container select {
@@ -53,7 +76,7 @@ html {
 #container textarea:focus, #placeholder:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-glow);
+  box-shadow: none;
   background: var(--bg-color-light);
 }
 
@@ -61,7 +84,7 @@ html {
   width: 100%;
   border-radius: 12px;
   margin-top: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
   border: 1px solid var(--border-color);
 }
 
@@ -111,7 +134,7 @@ html {
   min-height: 200px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  box-shadow: none;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -184,10 +207,68 @@ html {
 
 #responseContent button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px var(--primary-glow);
+  box-shadow: none;
 }
 
-#button, #buttonDel {
+.perpetratorListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.perpetratorBadge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.15));
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--text-main);
+  box-shadow: none;
+}
+
+.perpetratorName {
+  font-weight: 600;
+  color: var(--text-main);
+  padding-right: 8px;
+  margin-right: 8px;
+  border-right: 1px solid var(--border-color);
+}
+
+.perpetratorRole {
+  color: var(--primary);
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.perpetratorRemoveBtn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+}
+
+.perpetratorRemoveBtn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+#button {
   height: 48px;
   font-family: var(--font-heading);
   font-weight: 600;
@@ -200,22 +281,11 @@ html {
   margin-top: 20px;
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: 0 4px 14px 0 var(--primary-glow);
-}
-
-#buttonDel {
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.4);
+  box-shadow: none;
 }
 
 #button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-}
-
-#buttonDel:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+  box-shadow: none;
 }
 
 @keyframes slideUp {

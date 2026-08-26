@@ -82,9 +82,9 @@ export default function PostPreview({content}){
                             </>
                         ):(
                             <>
-                                {!deleteProccess?(
-                                    <>loading</>
-                                ):(
+                                {!deleteProccess ? (
+                                    <div className="loadingText" style={{ fontSize: '1rem', padding: '12px' }}>Memproses...</div>
+                                ) : (
                                     <>
                                         <div id={styles.deletePopupTitle}>
                                             <p>{deleteResult}</p>

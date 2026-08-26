@@ -11,6 +11,9 @@ export function Post({from,likes,comments,province,regency,type,perpetrator,vict
     
     const [likeState,setLikes] = useState(likes)
     const [commentInput,setCommentInput] = useState("")
+    const [imgError, setImgError] = useState(false);
+
+    const hasImage = image && typeof image === 'string' && image.trim() !== '' && image !== 'null' && image !== 'undefined';
 
     const handleChange = async(e)=>{
         setCommentInput(e.target.value)
@@ -55,22 +58,24 @@ export function Post({from,likes,comments,province,regency,type,perpetrator,vict
                     <div id={styles.explain}>
                         {explain}
                     </div>
-                    <div id={styles.image}>
-                        <img src={image}></img>
-                    </div>
-                    <div id={styles.perpetrator}>
-                        <p>Siapa saja yang terkait:</p>
-                        <div id={styles.itemContainer}>
-                            {Object.keys(perpetrator).map(key=>(
-                                <>
-                                    <div id={styles.item}>
+                    {hasImage && !imgError && (
+                        <div id={styles.image}>
+                            <img src={image} onError={() => setImgError(true)} alt="Bukti Laporan" />
+                        </div>
+                    )}
+                    {perpetrator && typeof perpetrator === 'object' && Object.keys(perpetrator).length > 0 && (
+                        <div id={styles.perpetrator}>
+                            <p>Siapa saja yang terkait:</p>
+                            <div id={styles.itemContainer}>
+                                {Object.keys(perpetrator).map((key, index) => (
+                                    <div key={index} id={styles.item}>
                                         <p id={styles.itemName}>{key}</p>
                                         <p id={styles.itemRole}>{perpetrator[key]}</p>
                                     </div>
-                                </>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                     <div id={styles.location}>
                         <img src="/icons/location-pin.png"/> 
                         <p>{province} , {regency}</p>

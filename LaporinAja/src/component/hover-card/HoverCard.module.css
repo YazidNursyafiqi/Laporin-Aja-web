@@ -6,7 +6,7 @@
   border-radius: 16px;
   padding: 20px;
   width: 260px;
-  box-shadow: var(--glass-shadow);
+  box-shadow: none;
   border: 1px solid var(--glass-border);
   z-index: 2000; 
   pointer-events: none; 
@@ -37,7 +37,7 @@
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
-  box-shadow: 0 2px 8px var(--primary-glow);
+  box-shadow: none;
 }
 
 .divider {

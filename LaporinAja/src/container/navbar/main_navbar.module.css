@@ -5,13 +5,13 @@
     -webkit-backdrop-filter: var(--glass-blur);
     border-right: 1px solid var(--border-color);
     position: fixed;
-    height: 100vh;
-    z-index: 1000;
-    top: 0;
+    height: calc(100vh - 64px);
+    z-index: 990;
+    top: 64px;
     left: 0;
     display: flex;
     flex-direction: column;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .navbar_option {
@@ -30,7 +30,8 @@ a {
     text-decoration: none;
 }
 
-.navbar_option img {
+.navbar_option img, .navbar_option svg {
+    width: 24px;
     height: 24px;
     margin-right: 16px;
     filter: var(--icon-filter);

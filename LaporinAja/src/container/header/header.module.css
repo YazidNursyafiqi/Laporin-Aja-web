@@ -82,7 +82,7 @@
 .search_container:focus-within {
   border-color: var(--primary);
   background: var(--bg-color-light);
-  box-shadow: 0 0 0 3px var(--primary-glow);
+  box-shadow: none;
 }
 
 .search_input {
@@ -94,10 +94,26 @@
   background: transparent;
 }
 
+.search_button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+}
+
 .search_icon {
   font-size: 14px;
   cursor: pointer;
   color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.search_button:hover .search_icon {
+  color: var(--primary);
 }
 
 .profile {
@@ -111,6 +127,26 @@
     border-radius: 50%;
     border: 2px solid var(--primary);
     filter: var(--icon-filter);
+}
+
+.login_btn {
+    padding: 8px 18px;
+    background: var(--primary);
+    color: #ffffff !important;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login_btn:hover {
+    background: var(--primary-dark, #0046c7);
+    box-shadow: none;
 }
 
 #mobileMenu {
@@ -154,7 +190,7 @@
         display: flex;
         flex-direction: column;
         padding: 10px 0;
-        box-shadow: var(--glass-shadow);
+        box-shadow: none;
     }
     #sideMenu a {
         color: var(--text-main);

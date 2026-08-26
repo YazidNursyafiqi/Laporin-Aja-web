@@ -13,8 +13,12 @@ export const getAccountInfo = async()=>{
 export const logout = async()=>{
     try{
         const result = await axios.delete(`${API_BASE_URL}/account/logout`,{withCredentials:true})
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         return {...result.data}
     }catch{
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         return {status:'not-connect'}
     }
 }

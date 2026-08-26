@@ -79,7 +79,9 @@ export default function Disukai(){
                     )}
                 </>
             ):(
-                <div>Loading</div>
+                <div className="loadingContainer">
+                    <div className="loadingText">Memuat Laporan Disukai...</div>
+                </div>
             )}
 
             {/**<>

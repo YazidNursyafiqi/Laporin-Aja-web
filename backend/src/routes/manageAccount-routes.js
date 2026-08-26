@@ -3,10 +3,14 @@ import express from "express";
 import checkAuthMiddleware from "../middlewares/checkAuth.js";
 
 const manageAccountRoute = express.Router()
-manageAccountRoute.use(checkAuthMiddleware)
 
-manageAccountRoute.get('/info',getUsername) //dapatkan username
-manageAccountRoute.delete('/logout',logOut) //logut/hapus sesi di browser
+// Allow logout routes without checkAuthMiddleware blocking them
+manageAccountRoute.delete('/logout', logOut)
+manageAccountRoute.post('/logout', logOut)
+manageAccountRoute.get('/logout', logOut)
+
+manageAccountRoute.use(checkAuthMiddleware)
+manageAccountRoute.get('/info', getUsername)
 
 export default manageAccountRoute
 

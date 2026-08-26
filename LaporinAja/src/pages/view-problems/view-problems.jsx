@@ -16,10 +16,12 @@ function ViewProblems_page(){
                 <Navbar/>
                 <div className={styles.content}>
                     <Routes>
-                        <Route path="/Wilayah" element={<Wilayah/>}/>
-                        <Route path="/Laporan" element={<Laporan/>}/>
-                        <Route path="/Disukai" element={<Disukai/>}/>
-                        <Route path="/Terkirim" element={<Terkirim/>}/>
+                        <Route index element={<Laporan/>}/>
+                        <Route path="Wilayah" element={<Wilayah/>}/>
+                        <Route path="Laporan" element={<Laporan/>}/>
+                        <Route path="Disukai" element={<Disukai/>}/>
+                        <Route path="Terkirim" element={<Terkirim/>}/>
+                        <Route path="*" element={<Laporan/>}/>
                     </Routes>
                 </div>
             </div>

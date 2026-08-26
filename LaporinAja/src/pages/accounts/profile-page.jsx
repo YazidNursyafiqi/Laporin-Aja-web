@@ -8,8 +8,12 @@ function ProfilePage() {
   const [user, setUser] = useState('Loading... ');
 
   const loadUsername = async()=>{
-    const result = await getAccountInfo()
-    setUser(result.username)
+    const result = await getAccountInfo();
+    if (result && result.username) {
+      setUser(result.username);
+    } else {
+      window.location.replace("/Login");
+    }
   }
 
   useEffect(() => {
@@ -17,9 +21,15 @@ function ProfilePage() {
   }, []);
 
   const handleLogout = async() => {
-    await logout()
+    try {
+      await logout();
+    } catch(e) {}
+    localStorage.clear();
+    sessionStorage.clear();
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     alert("Anda berhasil keluar!");
-    navigate("/login");
+    window.location.replace("/Login");
   };
 
   return (

@@ -3,7 +3,7 @@
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    box-shadow: none;
     width: 100%;
     height: fit-content;
     border-radius: 16px;
@@ -13,8 +13,7 @@
 }
 
 #container:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: none;
     border-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -75,7 +74,7 @@
 #viewPostContent {
     background: var(--bg-color-light);
     border: 1px solid var(--glass-border);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: none;
     padding: 24px;
     width: 90%;
     max-width: 1000px;
@@ -130,14 +129,14 @@
 
 #backButton {
     background: linear-gradient(135deg, var(--primary), var(--accent));
-    box-shadow: 0 4px 14px 0 var(--primary-glow);
+    box-shadow: none;
 }
 
 #delButton {
     background: linear-gradient(135deg, #ef4444, #b91c1c);
-    box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.4);
+    box-shadow: none;
 }
 
 #backButton:hover, #delButton:hover {
-    transform: translateY(-2px);
+    box-shadow: none;
 }

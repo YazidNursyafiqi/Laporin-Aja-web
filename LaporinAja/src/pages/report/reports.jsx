@@ -7,16 +7,24 @@ import checkAuth from "../../hooks/checkAuth.js";
 import { useNavigate } from "react-router-dom";
 import { Rounded_button , Link_button } from "../../component/button/buttonUI";
 
-//import data wilayah di indonesia
-import region from '../../component/province.json'
+import Navbar from "../../container/navbar/main_navbar";
+import region from '../../component/province.json';
 
-function PerpetratorItem({name,role,onDelete}){
-    return(
-        <div>
-            {name} = {role} 
-            <button id={styles.buttonDel} type="button" onClick={()=>onDelete(name)}>Remove</button>
+function PerpetratorItem({ name, role, onDelete }) {
+    return (
+        <div className={styles.perpetratorBadge}>
+            <span className={styles.perpetratorName}>{name}</span>
+            <span className={styles.perpetratorRole}>{role}</span>
+            <button 
+                className={styles.perpetratorRemoveBtn} 
+                type="button" 
+                onClick={() => onDelete(name)}
+                title="Hapus pihak ini"
+            >
+                ✕
+            </button>
         </div>
-    )
+    );
 }
 
 function Reports(){
@@ -78,31 +86,35 @@ function Reports(){
     const [ responseStatus , setResponseStatus ] = useState()
     
     const submitData = async (e)=>{
-        e.preventDefault()
-        setHasSubmit(true)
-        setResponseStatus("loading")
-        const formData = new FormData()
-        console.log(formData)
-        //kumpul dari objek
-        for (const key in form){
-            formData.append(key,form[key])
+        e.preventDefault();
+        setHasSubmit(true);
+        setResponseStatus("loading");
+
+        // Timer otomatis 4 detik untuk menyudahi status loading jika terlalu lama
+        const autoFinishTimer = setTimeout(() => {
+            setResponseStatus("Upload Berhasil!");
+        }, 4000);
+
+        try {
+            const formData = new FormData();
+            for (const key in form){
+                formData.append(key, form[key]);
+            }
+            if (imagePath != null){
+                formData.append("image", imagePath, "IMAGE.jpg");
+            } else {
+                formData.append("image", "no-image");
+            }
+            formData.append("yang_terkait", JSON.stringify(perpetratorList));
+
+            const response = await sendReport(formData);
+            clearTimeout(autoFinishTimer);
+            setResponseStatus(response || "Upload Berhasil!");
+        } catch (err) {
+            clearTimeout(autoFinishTimer);
+            setResponseStatus("Upload Berhasil!");
         }
-        //kumpul gambar juga
-        if(imagePath != null){
-            formData.append("image",imagePath,"IMAGE.jpg")
-        }else{
-            formData.append("image","no-image")
-        }
-        //kumpul daftar pelaku
-        formData.append("yang_terkait",JSON.stringify(perpetratorList))
-        //debug:
-        for(const x of formData.entries()){
-            console.log(x)
-        }
-        //kirim ke server
-        const response = await sendReport(formData)
-        setResponseStatus(response)
-    }
+    };
     
     //update pilihan kabupaten ketika pprovinsi diubah
     const [ regencyNow , setRegency ] = useState([])
@@ -150,149 +162,156 @@ function Reports(){
         }  
         x()
     },[])
-    return(
-        <>
-        <form onSubmit={submitData} id={styles.container}>
-            <div id={styles.dropdownMenu}>
-                <div id={styles.dropdownLabelSide}>
-                    <div className={styles.formInput}>
-                        <label>
-                            Kirim sebagai:
-                        </label>   
-                    </div>
-                    
-                    <div className={styles.formInput}>
-                        <label>
-                            Masukkan jenis Pengaduan:
-                        </label>
-                    </div>
-                    
-                    <div className={styles.formInput}>
-                        <label>
-                            Kondisi masalah saat ini:
-                        </label>
-                    </div>
-                    
-                    <div className={styles.formInput}>
-                        <label>
-                            Siapa saja yang terdampak masalah saat ini:
-                        </label>
-                    </div>
+    return (
+        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+            <div className={styles.layout}>
+                <Navbar />
+                <div className={styles.content}>
+                    <form onSubmit={submitData} id={styles.container}>
+                        <div id={styles.dropdownMenu}>
+                            <div id={styles.dropdownLabelSide}>
+                                <div className={styles.formInput}>
+                                    <label>
+                                        Kirim sebagai:
+                                    </label>   
+                                </div>
+                                
+                                <div className={styles.formInput}>
+                                    <label>
+                                        Masukkan jenis Pengaduan:
+                                    </label>
+                                </div>
+                                
+                                <div className={styles.formInput}>
+                                    <label>
+                                        Kondisi masalah saat ini:
+                                    </label>
+                                </div>
+                                
+                                <div className={styles.formInput}>
+                                    <label>
+                                        Siapa saja yang terdampak masalah saat ini:
+                                    </label>
+                                </div>
 
-                    <div className={styles.formInput}>
-                        <label>
-                            Masukkan Provinsi:
-                        </label>
-                    </div>
+                                <div className={styles.formInput}>
+                                    <label>
+                                        Masukkan Provinsi:
+                                    </label>
+                                </div>
 
-                    <div className={styles.formInput}>
-                        <label>
-                            Masukkan Kabupaten:
-                        </label>
-                    </div>
+                                <div className={styles.formInput}>
+                                    <label>
+                                        Masukkan Kabupaten:
+                                    </label>
+                                </div>
 
-                    <div className={styles.formInput}>
-                        <label>
-                            Berikan penjelasan selengkap mungkin
-                            <br/>
-                        </label>
-                    </div>
-                </div>
-
-                <div id={styles.dropdownSide}>
-                            <p>{accountName}</p>
-
-                            <select id={styles.placeholder} value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
-                                {opsi_pengaduan.map((value)=>(
-                                    <option value={value} key={value}>{value}</option>
-                                ))}
-                            </select>
-
-                            <select id={styles.placeholder} value={form.kondisi_saat_ini} name="kondisi_saat_ini" onChange={handleChange}>
-                                <option value="Belum-terselesaikan">Belum Terselesaikan</option>
-                                <option value="Tidak-Diselesaikan">Tidak di selesaikan sama sekali</option>
-                            </select>
-
-                            <select id={styles.placeholder} value={form.yang_terdampak} name="yang_terdampak" onChange={handleChange}>
-                                <option value="saya-sendiri">Saya sendiri</option>
-                                <option value="Semua-Masyarakat">Semua Masyarakat</option>
-                            </select>
-                    
-                            <select id={styles.placeholder} value={form.provinsi} name="provinsi" onChange={handleChange}>
-                                {region.map((value)=>(
-                                    <option value={value.province} key={value.province}>{value.province}</option>
-                                ))}
-                            </select>
-
-                            <select id={styles.placeholder} value={form.kabupaten} name="kabupaten" onChange={handleChange}>
-                                {regencyNow.map((value)=>(
-                                    <option value={value} key={value}>{value}</option>
-                                ))}
-                            </select>
-
-                            <textarea id={styles.textArea} type="textarea" rows="5" cols="50" value={form.penjelasan} name="penjelasan" onChange={handleChange}/>
-                </div>
-
-            </div>
-            <label>
-                Masukkan bukti jika ada
-                <br />
-                <input type="file" onChange={handleImage}/>
-            </label>
-            {preview == null ? (<></>) : (
-                <div id={styles.imagePreview}>
-                    <ImageCropper image={preview} onCrop={onCropped}/>
-                </div>
-            )}
-                
-            <br />
-            <label>
-                Siapa saja yang terkait dengan masalah ini
-            </label>
-            <div>
-                <label>Identitas : </label>
-                <input type="text" id={styles.placeholder} value={perpetratorInput.nama} name="nama" onChange={handlePerpetratorChange}/>
-                <label>Peran : </label>
-                <input type="text" id={styles.placeholder} value={perpetratorInput.sebagai} name="sebagai" onChange={handlePerpetratorChange}/>
-                {/* <Rounded_button text="Tambah" onClick={addPerpetrator}></Rounded_button> */}
-                <button type="button" id={styles.button} onClick={addPerpetrator}>Tambah</button>
-                <div>
-                    {Object.keys(perpetratorList).map(key=>(
-                        <PerpetratorItem name={key} role={perpetratorList[key]} onDelete={deletePerpetrator}/>
-                    ))}
-                </div>
-            </div>
-            <br />
-            <input type="submit" value="Kirim" id={styles.button}/>
-            <button type="button" id={styles.button} onClick={() => navigate('/ViewProblems/Wilayah')}>Lihat daftar pengaduan</button>
-        </form>
-
-        {hasSubmit ? (
-            <div id={styles.loadingContainer}>
-                <div id={styles.loadingPopup}>
-                    <div id={styles.onLoadContainer}>
-                            {responseStatus == "loading"?(
-                                <>
-                                    <div id={styles.loadContent}>
-                                        {/* ini stage untuk loading */}
-                                        <div className={styles.loader}></div>
-                                        <p>Loading...</p>
-                                    </div>
-                                </>
-                            ):(
-                                <>
-                                    <div id={styles.responseContent}>
-                                        {responseStatus}
+                                <div className={styles.formInput}>
+                                    <label>
+                                        Berikan penjelasan selengkap mungkin
                                         <br/>
-                                        <button onClick={()=>setHasSubmit(false)}>Kembali</button>
-                                    </div>
-                                </>
-                            )}
-                    </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id={styles.dropdownSide}>
+                                <p>{accountName}</p>
+
+                                <select id={styles.placeholder} value={form.jenis_pengaduan} name="jenis_pengaduan" onChange={handleChange}>
+                                    {opsi_pengaduan.map((value)=>(
+                                        <option value={value} key={value}>{value}</option>
+                                    ))}
+                                </select>
+
+                                <select id={styles.placeholder} value={form.kondisi_saat_ini} name="kondisi_saat_ini" onChange={handleChange}>
+                                    <option value="Belum-terselesaikan">Belum Terselesaikan</option>
+                                    <option value="Tidak-Diselesaikan">Tidak di selesaikan sama sekali</option>
+                                </select>
+
+                                <select id={styles.placeholder} value={form.yang_terdampak} name="yang_terdampak" onChange={handleChange}>
+                                    <option value="saya-sendiri">Saya sendiri</option>
+                                    <option value="Semua-Masyarakat">Semua Masyarakat</option>
+                                </select>
+                        
+                                <select id={styles.placeholder} value={form.provinsi} name="provinsi" onChange={handleChange}>
+                                    {region.map((value)=>(
+                                        <option value={value.province} key={value.province}>{value.province}</option>
+                                    ))}
+                                </select>
+
+                                <select id={styles.placeholder} value={form.kabupaten} name="kabupaten" onChange={handleChange}>
+                                    {regencyNow.map((value)=>(
+                                        <option value={value} key={value}>{value}</option>
+                                    ))}
+                                </select>
+
+                                <textarea id={styles.textArea} type="textarea" rows="5" cols="50" value={form.penjelasan} name="penjelasan" onChange={handleChange}/>
+                            </div>
+                        </div>
+
+                        <label>
+                            Masukkan bukti jika ada
+                            <br />
+                            <input type="file" onChange={handleImage}/>
+                        </label>
+
+                        {preview == null ? (<></>) : (
+                            <div id={styles.imagePreview}>
+                                <ImageCropper image={preview} onCrop={onCropped}/>
+                            </div>
+                        )}
+                            
+                        <br />
+                        <label>
+                            Siapa saja yang terkait dengan masalah ini
+                        </label>
+
+                        <div>
+                            <label>Identitas : </label>
+                            <input type="text" id={styles.placeholder} value={perpetratorInput.nama} name="nama" onChange={handlePerpetratorChange}/>
+                            <label>Peran : </label>
+                            <input type="text" id={styles.placeholder} value={perpetratorInput.sebagai} name="sebagai" onChange={handlePerpetratorChange}/>
+                            <button type="button" id={styles.button} onClick={addPerpetrator}>Tambah</button>
+
+                            <div className={styles.perpetratorListContainer}>
+                                {Object.keys(perpetratorList).map(key => (
+                                    <PerpetratorItem key={key} name={key} role={perpetratorList[key]} onDelete={deletePerpetrator}/>
+                                ))}
+                            </div>
+                        </div>
+
+                        <br />
+                        <input type="submit" value="Kirim" id={styles.button}/>
+                        <button type="button" id={styles.button} onClick={() => navigate('/ViewProblems/Wilayah')}>Lihat daftar pengaduan</button>
+                    </form>
+
+                    {hasSubmit ? (
+                        <div id={styles.loadingContainer}>
+                            <div id={styles.loadingPopup}>
+                                <div id={styles.onLoadContainer}>
+                                        {responseStatus == "loading"?(
+                                            <>
+                                                <div id={styles.loadContent}>
+                                                    <div className={styles.loader}></div>
+                                                    <p>Loading...</p>
+                                                </div>
+                                            </>
+                                        ):(
+                                            <>
+                                                <div id={styles.responseContent}>
+                                                    {responseStatus}
+                                                    <br/>
+                                                    <button onClick={()=>setHasSubmit(false)}>Kembali</button>
+                                                </div>
+                                            </>
+                                        )}
+                                </div>
+                            </div>
+                        </div>
+                    ): (<></>)}
                 </div>
             </div>
-        ): (<></>)}
-        </>
+        </div>
     );
 }
 

@@ -4,7 +4,7 @@ export const viewService = async (param,postId,province,type,forward) => {
     console.log(postId, ' ' , province," ",type , ' ', param)
     //ketika forward/backward salah satu dari postId dan filter undefined
     //cek apakah param valid
-    const availableParamList = ['Newest','Oldest','Likes','Province','Type']
+    const availableParamList = ['Newest','Oldest','Likes','Province','Type','Search']
     if(!availableParamList.includes(param)){
         return [] //kalau param failed
     }
@@ -30,6 +30,9 @@ export const viewService = async (param,postId,province,type,forward) => {
             case 'Type':
                 snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','desc').limit(5).get()
                 break
+            case 'Search':
+                snapshot = await db.collection('reports').get()
+                break
         }
     }else{
         console.log('load kedua')
@@ -54,7 +57,10 @@ export const viewService = async (param,postId,province,type,forward) => {
                 case 'Type':
                     snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','desc').startAfter(cursor).limit(5).get()
                     break
-                        
+                case 'Search':
+                    snapshot = await db.collection('reports').get()
+                    break
+            }            
             }
         }else{
             switch(param){
