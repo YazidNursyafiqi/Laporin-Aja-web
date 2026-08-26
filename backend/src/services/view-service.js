@@ -1,105 +1,173 @@
 import db from "../application/firestore.js";
 
-export const viewService = async (param,postId,province,type,forward) => {
-    console.log(postId, ' ' , province," ",type , ' ', param)
-    //ketika forward/backward salah satu dari postId dan filter undefined
-    //cek apakah param valid
-    const availableParamList = ['Newest','Oldest','Likes','Province','Type','Search']
-    if(!availableParamList.includes(param)){
-        return [] //kalau param failed
+export const viewService = async (param, postId, province, type, forward) => {
+    console.log(postId, ' ', province, " ", type, ' ', param);
+    const availableParamList = ['Newest', 'Oldest', 'Likes', 'Province', 'Type', 'Search'];
+    if (!availableParamList.includes(param)) {
+        return { content: [], totalPost: 0 };
     }
 
-    let snapshot = null
+    let snapshot = null;
 
-    if(postId == null || postId == undefined){
-        //load pertama kali
-        console.log('load pertama')
-        switch(param){
-            case 'Newest':
-                snapshot = await db.collection('reports').orderBy('date','desc').limit(5).get()
-                break
-            case 'Oldest':
-                snapshot = await db.collection('reports').orderBy('date','asc').limit(5).get()
-                break
-            case 'Likes':
-                snapshot = await db.collection('reports').orderBy('likes','desc').orderBy('date','desc').limit(5).get()
-                break
-            case 'Province':
-                snapshot = await db.collection('reports').where('provinsi','==',province).orderBy('date','desc').limit(5).get()
-                break
-            case 'Type':
-                snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','desc').limit(5).get()
-                break
-            case 'Search':
-                snapshot = await db.collection('reports').get()
-                break
-        }
-    }else{
-        console.log('load kedua')
-        const x = await db.collection('reports').where('id','==',postId).limit(1).get()
-        const cursor = x.docs[0]
-
-        //load berdasarkan cursor
-        if(forward){
-            switch(param){
+    try {
+        if (postId == null || postId == undefined) {
+            console.log('load pertama');
+            switch (param) {
                 case 'Newest':
-                    snapshot = await db.collection('reports').orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
+                    snapshot = await db.collection('reports').orderBy('date', 'desc').limit(5).get();
+                    break;
                 case 'Oldest':
-                    snapshot = await db.collection('reports').orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Likes':   
-                    snapshot = await db.collection('reports').orderBy('likes','desc').orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Province':   
-                    snapshot = await db.collection('reports').where('provinsi','==',province).orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Type':
-                    snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Search':
-                    snapshot = await db.collection('reports').get()
-                    break
-            }            
-            }
-        }else{
-            switch(param){
-                case 'Newest':
-                    snapshot = await db.collection('reports').orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Oldest':
-                    snapshot = await db.collection('reports').orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
+                    snapshot = await db.collection('reports').orderBy('date', 'asc').limit(5).get();
+                    break;
                 case 'Likes':
-                    snapshot = await db.collection('reports').orderBy('likes','asc').orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Province':   
-                    snapshot = await db.collection('reports').where('provinsi','==',province).orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
+                    try {
+                        snapshot = await db.collection('reports').orderBy('likes', 'desc').orderBy('date', 'desc').limit(5).get();
+                    } catch (e) {
+                        snapshot = await db.collection('reports').orderBy('likes', 'desc').limit(5).get();
+                    }
+                    break;
+                case 'Province':
+                    try {
+                        snapshot = await db.collection('reports').where('provinsi', '==', province).orderBy('date', 'desc').limit(5).get();
+                    } catch (e) {
+                        snapshot = await db.collection('reports').where('provinsi', '==', province).get();
+                    }
+                    break;
                 case 'Type':
-                    snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
+                    try {
+                        snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).orderBy('date', 'desc').limit(5).get();
+                    } catch (e) {
+                        snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).get();
+                    }
+                    break;
+                case 'Search':
+                    snapshot = await db.collection('reports').get();
+                    break;
             }
-            //snapshot = await db.collection('reports').orderBy('date','asc').startAfter(date).limit(5).get()
+        } else {
+            console.log('load kedua');
+            const x = await db.collection('reports').where('id', '==', postId).limit(1).get();
+            const cursor = !x.empty ? x.docs[0] : null;
+
+            if (forward) {
+                switch (param) {
+                    case 'Newest':
+                        snapshot = cursor 
+                            ? await db.collection('reports').orderBy('date', 'desc').startAfter(cursor).limit(5).get()
+                            : await db.collection('reports').orderBy('date', 'desc').limit(5).get();
+                        break;
+                    case 'Oldest':
+                        snapshot = cursor 
+                            ? await db.collection('reports').orderBy('date', 'asc').startAfter(cursor).limit(5).get()
+                            : await db.collection('reports').orderBy('date', 'asc').limit(5).get();
+                        break;
+                    case 'Likes':
+                        try {
+                            snapshot = cursor 
+                                ? await db.collection('reports').orderBy('likes', 'desc').orderBy('date', 'desc').startAfter(cursor).limit(5).get()
+                                : await db.collection('reports').orderBy('likes', 'desc').limit(5).get();
+                        } catch (e) {
+                            snapshot = await db.collection('reports').orderBy('likes', 'desc').limit(5).get();
+                        }
+                        break;
+                    case 'Province':
+                        try {
+                            snapshot = cursor 
+                                ? await db.collection('reports').where('provinsi', '==', province).orderBy('date', 'desc').startAfter(cursor).limit(5).get()
+                                : await db.collection('reports').where('provinsi', '==', province).limit(5).get();
+                        } catch (e) {
+                            snapshot = await db.collection('reports').where('provinsi', '==', province).get();
+                        }
+                        break;
+                    case 'Type':
+                        try {
+                            snapshot = cursor 
+                                ? await db.collection('reports').where('jenis_pengaduan', '==', type).orderBy('date', 'desc').startAfter(cursor).limit(5).get()
+                                : await db.collection('reports').where('jenis_pengaduan', '==', type).limit(5).get();
+                        } catch (e) {
+                            snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).get();
+                        }
+                        break;
+                    case 'Search':
+                        snapshot = await db.collection('reports').get();
+                        break;
+                }
+            } else {
+                switch (param) {
+                    case 'Newest':
+                        snapshot = cursor 
+                            ? await db.collection('reports').orderBy('date', 'asc').startAfter(cursor).limit(5).get()
+                            : await db.collection('reports').orderBy('date', 'asc').limit(5).get();
+                        break;
+                    case 'Oldest':
+                        snapshot = cursor 
+                            ? await db.collection('reports').orderBy('date', 'desc').startAfter(cursor).limit(5).get()
+                            : await db.collection('reports').orderBy('date', 'desc').limit(5).get();
+                        break;
+                    case 'Likes':
+                        try {
+                            snapshot = cursor 
+                                ? await db.collection('reports').orderBy('likes', 'asc').orderBy('date', 'asc').startAfter(cursor).limit(5).get()
+                                : await db.collection('reports').orderBy('likes', 'asc').limit(5).get();
+                        } catch (e) {
+                            snapshot = await db.collection('reports').orderBy('likes', 'asc').limit(5).get();
+                        }
+                        break;
+                    case 'Province':
+                        try {
+                            snapshot = cursor 
+                                ? await db.collection('reports').where('provinsi', '==', province).orderBy('date', 'asc').startAfter(cursor).limit(5).get()
+                                : await db.collection('reports').where('provinsi', '==', province).limit(5).get();
+                        } catch (e) {
+                            snapshot = await db.collection('reports').where('provinsi', '==', province).get();
+                        }
+                        break;
+                    case 'Type':
+                        try {
+                            snapshot = cursor 
+                                ? await db.collection('reports').where('jenis_pengaduan', '==', type).orderBy('date', 'asc').startAfter(cursor).limit(5).get()
+                                : await db.collection('reports').where('jenis_pengaduan', '==', type).limit(5).get();
+                        } catch (e) {
+                            snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).get();
+                        }
+                        break;
+                }
+            }
         }
+    } catch (err) {
+        console.error("View service query error:", err.message);
+        snapshot = null;
     }
 
-    //jadikan 1 array
-    const result = []
-    console.log(forward)
-    snapshot.forEach(doc => {
-        if(forward){
-            result.push(doc.data())
-        }else{
-            result.unshift(doc.data())
-        }
-    })
+    const result = [];
+    if (snapshot && !snapshot.empty) {
+        snapshot.forEach(doc => {
+            if (forward !== false) {
+                result.push(doc.data());
+            } else {
+                result.unshift(doc.data());
+            }
+        });
+    }
 
-    //ambil jumlah total postingan
-    const len = await db.collection('reports').count().get()
-    const total = len.data().count
-    return {content:result,totalPost:total}
-}
+    let total = 0;
+    try {
+        if (param === 'Province' && province) {
+            const countSnap = await db.collection('reports').where('provinsi', '==', province).count().get();
+            total = countSnap.data().count;
+        } else if (param === 'Type' && type) {
+            const countSnap = await db.collection('reports').where('jenis_pengaduan', '==', type).count().get();
+            total = countSnap.data().count;
+        } else {
+            const len = await db.collection('reports').count().get();
+            total = len.data().count;
+        }
+    } catch (e) {
+        total = result.length;
+    }
+
+    return { content: result, totalPost: total };
+};
 
 export const getLikesService = async(username,postId,forward)=>{
     const account = await db.collection('accounts').where('username','==',username).limit(1).get()
