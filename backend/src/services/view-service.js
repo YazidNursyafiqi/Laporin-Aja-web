@@ -7,166 +7,71 @@ export const viewService = async (param, postId, province, type, forward) => {
         return { content: [], totalPost: 0 };
     }
 
-    let snapshot = null;
-
     try {
-        if (postId == null || postId == undefined) {
-            console.log('load pertama');
-            switch (param) {
-                case 'Newest':
-                    snapshot = await db.collection('reports').orderBy('date', 'desc').limit(5).get();
-                    break;
-                case 'Oldest':
-                    snapshot = await db.collection('reports').orderBy('date', 'asc').limit(5).get();
-                    break;
-                case 'Likes':
-                    try {
-                        snapshot = await db.collection('reports').orderBy('likes', 'desc').orderBy('date', 'desc').limit(5).get();
-                    } catch (e) {
-                        snapshot = await db.collection('reports').orderBy('likes', 'desc').limit(5).get();
-                    }
-                    break;
-                case 'Province':
-                    try {
-                        snapshot = await db.collection('reports').where('provinsi', '==', province).orderBy('date', 'desc').limit(5).get();
-                    } catch (e) {
-                        snapshot = await db.collection('reports').where('provinsi', '==', province).get();
-                    }
-                    break;
-                case 'Type':
-                    try {
-                        snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).orderBy('date', 'desc').limit(5).get();
-                    } catch (e) {
-                        snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).get();
-                    }
-                    break;
-                case 'Search':
-                    snapshot = await db.collection('reports').get();
-                    break;
-            }
-        } else {
-            console.log('load kedua');
-            const x = await db.collection('reports').where('id', '==', postId).limit(1).get();
-            const cursor = !x.empty ? x.docs[0] : null;
+        let allDocs = [];
 
-            if (forward) {
-                switch (param) {
-                    case 'Newest':
-                        snapshot = cursor 
-                            ? await db.collection('reports').orderBy('date', 'desc').startAfter(cursor).limit(5).get()
-                            : await db.collection('reports').orderBy('date', 'desc').limit(5).get();
-                        break;
-                    case 'Oldest':
-                        snapshot = cursor 
-                            ? await db.collection('reports').orderBy('date', 'asc').startAfter(cursor).limit(5).get()
-                            : await db.collection('reports').orderBy('date', 'asc').limit(5).get();
-                        break;
-                    case 'Likes':
-                        try {
-                            snapshot = cursor 
-                                ? await db.collection('reports').orderBy('likes', 'desc').orderBy('date', 'desc').startAfter(cursor).limit(5).get()
-                                : await db.collection('reports').orderBy('likes', 'desc').limit(5).get();
-                        } catch (e) {
-                            snapshot = await db.collection('reports').orderBy('likes', 'desc').limit(5).get();
-                        }
-                        break;
-                    case 'Province':
-                        try {
-                            snapshot = cursor 
-                                ? await db.collection('reports').where('provinsi', '==', province).orderBy('date', 'desc').startAfter(cursor).limit(5).get()
-                                : await db.collection('reports').where('provinsi', '==', province).limit(5).get();
-                        } catch (e) {
-                            snapshot = await db.collection('reports').where('provinsi', '==', province).get();
-                        }
-                        break;
-                    case 'Type':
-                        try {
-                            snapshot = cursor 
-                                ? await db.collection('reports').where('jenis_pengaduan', '==', type).orderBy('date', 'desc').startAfter(cursor).limit(5).get()
-                                : await db.collection('reports').where('jenis_pengaduan', '==', type).limit(5).get();
-                        } catch (e) {
-                            snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).get();
-                        }
-                        break;
-                    case 'Search':
-                        snapshot = await db.collection('reports').get();
-                        break;
+        if (param === 'Newest') {
+            const snap = await db.collection('reports').orderBy('date', 'desc').get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+        } else if (param === 'Oldest') {
+            const snap = await db.collection('reports').orderBy('date', 'asc').get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+        } else if (param === 'Likes') {
+            try {
+                const snap = await db.collection('reports').orderBy('likes', 'desc').orderBy('date', 'desc').get();
+                snap.forEach(doc => allDocs.push(doc.data()));
+            } catch (e) {
+                const snap = await db.collection('reports').orderBy('likes', 'desc').get();
+                snap.forEach(doc => allDocs.push(doc.data()));
+            }
+        } else if (param === 'Province') {
+            const targetProv = province || 'Provinsi Aceh';
+            const snap = await db.collection('reports').where('provinsi', '==', targetProv).get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+
+            // Smart filter: if type is also specified and matching reports exist, use them
+            if (type) {
+                const filteredByType = allDocs.filter(d => d.jenis_pengaduan === type);
+                if (filteredByType.length > 0) {
+                    allDocs = filteredByType;
                 }
-            } else {
-                switch (param) {
-                    case 'Newest':
-                        snapshot = cursor 
-                            ? await db.collection('reports').orderBy('date', 'asc').startAfter(cursor).limit(5).get()
-                            : await db.collection('reports').orderBy('date', 'asc').limit(5).get();
-                        break;
-                    case 'Oldest':
-                        snapshot = cursor 
-                            ? await db.collection('reports').orderBy('date', 'desc').startAfter(cursor).limit(5).get()
-                            : await db.collection('reports').orderBy('date', 'desc').limit(5).get();
-                        break;
-                    case 'Likes':
-                        try {
-                            snapshot = cursor 
-                                ? await db.collection('reports').orderBy('likes', 'asc').orderBy('date', 'asc').startAfter(cursor).limit(5).get()
-                                : await db.collection('reports').orderBy('likes', 'asc').limit(5).get();
-                        } catch (e) {
-                            snapshot = await db.collection('reports').orderBy('likes', 'asc').limit(5).get();
-                        }
-                        break;
-                    case 'Province':
-                        try {
-                            snapshot = cursor 
-                                ? await db.collection('reports').where('provinsi', '==', province).orderBy('date', 'asc').startAfter(cursor).limit(5).get()
-                                : await db.collection('reports').where('provinsi', '==', province).limit(5).get();
-                        } catch (e) {
-                            snapshot = await db.collection('reports').where('provinsi', '==', province).get();
-                        }
-                        break;
-                    case 'Type':
-                        try {
-                            snapshot = cursor 
-                                ? await db.collection('reports').where('jenis_pengaduan', '==', type).orderBy('date', 'asc').startAfter(cursor).limit(5).get()
-                                : await db.collection('reports').where('jenis_pengaduan', '==', type).limit(5).get();
-                        } catch (e) {
-                            snapshot = await db.collection('reports').where('jenis_pengaduan', '==', type).get();
-                        }
-                        break;
+            }
+            allDocs.sort((a, b) => (b.date || 0) - (a.date || 0));
+        } else if (param === 'Type') {
+            const targetType = type || 'Infrastruktur dan Fasilitas';
+            const snap = await db.collection('reports').where('jenis_pengaduan', '==', targetType).get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+
+            // Smart filter: if province is also specified and matching reports exist, use them
+            if (province) {
+                const filteredByProv = allDocs.filter(d => d.provinsi === province);
+                if (filteredByProv.length > 0) {
+                    allDocs = filteredByProv;
                 }
+            }
+            allDocs.sort((a, b) => (b.date || 0) - (a.date || 0));
+        } else if (param === 'Search') {
+            const snap = await db.collection('reports').get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+            allDocs.sort((a, b) => (b.date || 0) - (a.date || 0));
+        }
+
+        const totalPost = allDocs.length;
+        let startIndex = 0;
+
+        if (postId) {
+            const foundIdx = allDocs.findIndex(d => d.id === postId);
+            if (foundIdx !== -1) {
+                startIndex = forward !== false ? foundIdx + 1 : Math.max(0, foundIdx - 5);
             }
         }
+
+        const content = allDocs.slice(startIndex, startIndex + 5);
+        return { content, totalPost };
     } catch (err) {
         console.error("View service query error:", err.message);
-        snapshot = null;
+        return { content: [], totalPost: 0 };
     }
-
-    const result = [];
-    if (snapshot && !snapshot.empty) {
-        snapshot.forEach(doc => {
-            if (forward !== false) {
-                result.push(doc.data());
-            } else {
-                result.unshift(doc.data());
-            }
-        });
-    }
-
-    let total = 0;
-    try {
-        if (param === 'Province' && province) {
-            const countSnap = await db.collection('reports').where('provinsi', '==', province).count().get();
-            total = countSnap.data().count;
-        } else if (param === 'Type' && type) {
-            const countSnap = await db.collection('reports').where('jenis_pengaduan', '==', type).count().get();
-            total = countSnap.data().count;
-        } else {
-            const len = await db.collection('reports').count().get();
-            total = len.data().count;
-        }
-    } catch (e) {
-        total = result.length;
-    }
-
-    return { content: result, totalPost: total };
 };
 
 export const getLikesService = async(username,postId,forward)=>{
